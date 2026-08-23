@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard - Slurm Manager
+{% endblock %}
+
+{% block nav_dashboard %}
+active
+{% endblock %}
+
+{% block page_title %}
+Slurm Cluster Dashboard
+{% endblock %}
+
+{% block page_subtitle %}
+HPC cluster overview
+{% endblock %}
+
+
+{% block content %}
+
+{% if error %}
+
+<div class="alert alert-error">
+    <strong>Slurm error:</strong>
+    {{ error }}
+</div>
+
+{% endif %}
+
+
+<!-- =========================================================
+     Cluster Metrics
+     ========================================================= -->
+
+<section class="metrics-grid">
+
+    <!-- Nodes -->
+
+    <div class="metric-card">
+
+        <div class="metric-header">
+            <span>Nodes</span>
+
+            <span class="metric-icon">
+                🖥
+            </span>
+        </div>
+
+        <div class="metric-value">
+            {{ node_stats.total }}
+        </div>
+
+        <div class="metric-details">
+
+            <span class="status idle">
+                ● {{ node_stats.idle }} Idle
+            </span>
+
+            <span class="status allocated">
+                ● {{ node_stats.allocated }} Allocated
+            </span>
+
+            <span class="status down">
+                ● {{ node_stats.down }} Down
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- CPUs -->
+
+    <div class="metric-card">
+
+        <div class="metric-header">
+            <span>CPUs</span>
+
+            <span class="metric-icon">
+                ⚙
+            </span>
+        </div>
+
+        <div class="metric-value">
+            {{ cpu_stats.total|floatformat:0 }}
+        </div>
+
+        <div class="metric-label">
+            Total CPU cores
+        </div>
+
+    </div>
+
+
+    <!-- Jobs -->
+
+    <div class="metric-card">
+
+        <div class="metric-header">
+            <span>Jobs</span>
+
+            <span class="metric-icon">
+                ▣
+            </span>
+        </div>
+
+        <div class="metric-value">
+            {{ job_stats.total }}
+        </div>
+
+        <div class="metric-details">
+
+            <span class="status allocated">
+                ● {{ job_stats.running }} Running
+            </span>
+
+            <span class="status pending">
+                ● {{ job_stats.pending }} Pending
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Partitions -->
+
+    <div class="metric-card">
+
+        <div class="metric-header">
+            <span>Partitions</span>
+
+            <span class="metric-icon">
+                ◈
+            </span>
+        </div>
+
+        <div class="metric-value">
+            {{ partition_stats.total }}
+        </div>
+
+        <div class="metric-label">
+            Configured Slurm partitions
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     Quick Links
+     ========================================================= -->
+
+<section class="quick-links">
+
+    <div class="quick-links-header">
+
+        <div>
+            <h2>Quick Links</h2>
+
+            <p>
+                Manage and inspect your Slurm cluster
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="quick-links-grid">
+
+
+        <!-- Nodes -->
+
+        <a
+            href="{% url 'nodes:list' %}"
+            class="quick-link-card"
+        >
+
+            <div class="quick-link-icon">
+                🖥
+            </div>
+
+            <div class="quick-link-content">
+
+                <h3>
+                    Nodes
+                </h3>
+
+                <p>
+                    View cluster nodes, state, CPU and memory information.
+                </p>
+
+            </div>
+
+            <div class="quick-link-arrow">
+                →
+            </div>
+
+        </a>
+
+
+        <!-- Jobs -->
+
+        <a
+            href="{% url 'jobs:list' %}"
+            class="quick-link-card"
+        >
+
+            <div class="quick-link-icon">
+                ▣
+            </div>
+
+            <div class="quick-link-content">
+
+                <h3>
+                    Jobs
+                </h3>
+
+                <p>
+                    Monitor running and pending Slurm jobs.
+                </p>
+
+            </div>
+
+            <div class="quick-link-arrow">
+                →
+            </div>
+
+        </a>
+
+
+        <!-- Partitions -->
+
+        <a
+            href="{% url 'partitions:list' %}"
+            class="quick-link-card"
+        >
+
+            <div class="quick-link-icon">
+                ◈
+            </div>
+
+            <div class="quick-link-content">
+
+                <h3>
+                    Partitions
+                </h3>
+
+                <p>
+                    View configured Slurm partitions and limits.
+                </p>
+
+            </div>
+
+            <div class="quick-link-arrow">
+                →
+            </div>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+{% endblock %}
+

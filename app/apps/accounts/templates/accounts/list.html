@@ -1,0 +1,545 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Accounts - Slurm Manager
+{% endblock %}
+
+
+{% block nav_accounts %}
+active
+{% endblock %}
+
+
+{% block page_title %}
+Slurm Accounts
+{% endblock %}
+
+
+{% block page_subtitle %}
+Accounts, users, associations, and account hierarchy
+{% endblock %}
+
+
+{% block content %}
+
+{% if error %}
+
+<div class="alert alert-error">
+    <strong>Slurm error:</strong>
+    {{ error }}
+</div>
+
+{% endif %}
+
+
+<!-- =====================================================
+     SUMMARY
+     ===================================================== -->
+
+<section class="metrics-grid">
+
+    <div class="metric-card">
+
+        <div class="metric-header">
+            <span>Accounts</span>
+            <span class="metric-icon">◈</span>
+        </div>
+
+        <div class="metric-value">
+            {{ summary.accounts }}
+        </div>
+
+        <div class="metric-label">
+            Slurm accounts
+        </div>
+
+    </div>
+
+
+    <div class="metric-card">
+
+        <div class="metric-header">
+            <span>Users</span>
+            <span class="metric-icon">👤</span>
+        </div>
+
+        <div class="metric-value">
+            {{ summary.users }}
+        </div>
+
+        <div class="metric-label">
+            Accounting users
+        </div>
+
+    </div>
+
+
+    <div class="metric-card">
+
+        <div class="metric-header">
+            <span>Associations</span>
+            <span class="metric-icon">🔗</span>
+        </div>
+
+        <div class="metric-value">
+            {{ summary.associations }}
+        </div>
+
+        <div class="metric-label">
+            Account / user associations
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FILTERS
+     ===================================================== -->
+
+<section class="panel">
+
+    <div class="panel-header">
+
+        <div>
+            <h2>Filters</h2>
+
+            <p>
+                Use <code>*</code> and <code>?</code> as wildcards.
+            </p>
+        </div>
+
+    </div>
+
+
+    <form method="get" class="filter-form">
+
+        <div class="filter-grid">
+
+            <div class="filter-field">
+
+                <label for="account">
+                    Account
+                </label>
+
+                <input
+                    type="text"
+                    id="account"
+                    name="account"
+                    value="{{ filters.account }}"
+                    placeholder="*"
+                >
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label for="user">
+                    User
+                </label>
+
+                <input
+                    type="text"
+                    id="user"
+                    name="user"
+                    value="{{ filters.user }}"
+                    placeholder="*"
+                >
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label for="cluster">
+                    Cluster
+                </label>
+
+                <input
+                    type="text"
+                    id="cluster"
+                    name="cluster"
+                    value="{{ filters.cluster }}"
+                    placeholder="*"
+                >
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label for="partition">
+                    Partition
+                </label>
+
+                <input
+                    type="text"
+                    id="partition"
+                    name="partition"
+                    value="{{ filters.partition }}"
+                    placeholder="*"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="filter-actions">
+
+            <button
+                type="submit"
+                class="button button-primary"
+            >
+                Search
+            </button>
+
+            <a
+                href="{% url 'accounts:list' %}"
+                class="button button-secondary"
+            >
+                Clear
+            </a>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<!-- =====================================================
+     ACCOUNT TABS
+     ===================================================== -->
+
+<section class="panel">
+
+    <div class="tabs" role="tablist" aria-label="Account information">
+
+        <button
+            type="button"
+            class="tab-button active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="tab-accounts"
+            data-tab="tab-accounts"
+        >
+            Accounts
+            <span class="count-badge">
+                {{ summary.accounts }}
+            </span>
+        </button>
+
+        <button
+            type="button"
+            class="tab-button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tab-associations"
+            data-tab="tab-associations"
+        >
+            Associations
+            <span class="count-badge">
+                {{ summary.associations }}
+            </span>
+        </button>
+
+        <button
+            type="button"
+            class="tab-button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tab-users"
+            data-tab="tab-users"
+        >
+            Users
+            <span class="count-badge">
+                {{ summary.users }}
+            </span>
+        </button>
+
+    </div>
+
+
+    <!-- =================================================
+         ACCOUNTS TAB
+         ================================================= -->
+
+    <div
+        id="tab-accounts"
+        class="tab-panel active"
+        role="tabpanel"
+    >
+
+        <div class="tab-header">
+
+            <div>
+                <h2>Account Hierarchy</h2>
+
+                <p>
+                    Parent and child account relationships
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="account-tree">
+
+            {% for account in account_tree %}
+
+                {% include "accounts/tree_node.html" with account=account %}
+
+            {% empty %}
+
+                <div class="empty">
+                    No accounts found.
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         ASSOCIATIONS TAB
+         ================================================= -->
+
+    <div
+        id="tab-associations"
+        class="tab-panel"
+        role="tabpanel"
+        hidden
+    >
+
+        <div class="tab-header">
+
+            <div>
+                <h2>Associations</h2>
+
+                <p>
+                    Cluster / account / user / partition relationships
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Cluster</th>
+                        <th>Account</th>
+                        <th>User</th>
+                        <th>Partition</th>
+                        <th>Fairshare</th>
+                        <th>Default QoS</th>
+                        <th>QoS</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for association in associations %}
+
+                    <tr>
+
+                        <td>
+                            {{ association.cluster }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                {{ association.account }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ association.user|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ association.partition }}
+                        </td>
+
+                        <td>
+                            {{ association.fairshare|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ association.default_qos|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ association.qos|default:"—" }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty"
+                        >
+                            No associations found.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         USERS TAB
+         ================================================= -->
+
+    <div
+        id="tab-users"
+        class="tab-panel"
+        role="tabpanel"
+        hidden
+    >
+
+        <div class="tab-header">
+
+            <div>
+                <h2>Users</h2>
+
+                <p>
+                    Slurm accounting users
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>User</th>
+                        <th>Default Account</th>
+                        <th>Default WCKey</th>
+                        <th>Admin Level</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for user in users %}
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                {{ user.name }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ user.default_account|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ user.default_wckey|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ user.admin_level|default:"None" }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="4"
+                            class="empty"
+                        >
+                            No users found.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const buttons = document.querySelectorAll(".tab-button");
+    const panels = document.querySelectorAll(".tab-panel");
+
+    buttons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            const targetId = button.dataset.tab;
+
+            buttons.forEach(function (item) {
+                item.classList.remove("active");
+                item.setAttribute("aria-selected", "false");
+            });
+
+            panels.forEach(function (panel) {
+                panel.classList.remove("active");
+                panel.hidden = true;
+            });
+
+            button.classList.add("active");
+            button.setAttribute("aria-selected", "true");
+
+            const target = document.getElementById(targetId);
+
+            target.hidden = false;
+            target.classList.add("active");
+
+        });
+
+    });
+
+});
+</script>
+
+
+{% endblock %}
+

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Partitions - Slurm Manager
+{% endblock %}
+
+
+{% block nav_partitions %}
+active
+{% endblock %}
+
+
+{% block page_title %}
+Slurm Partitions
+{% endblock %}
+
+
+{% block page_subtitle %}
+Configured cluster partitions
+{% endblock %}
+
+
+{% block content %}
+
+{% if error %}
+
+<div class="alert alert-error">
+
+    <strong>Slurm error:</strong>
+    {{ error }}
+
+</div>
+
+{% endif %}
+
+
+<section class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>Partitions</h2>
+
+            <p>
+                Configured Slurm partitions
+            </p>
+
+        </div>
+
+        <span class="count-badge">
+            {{ partitions|length }}
+        </span>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Partition</th>
+                    <th>State</th>
+                    <th>Nodes</th>
+                    <th>CPUs</th>
+                    <th>Time Limit</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for partition in partitions %}
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            {{ partition.name }}
+                        </strong>
+                    </td>
+
+                    <td>
+
+                        <span class="badge badge-up">
+                            {{ partition.state }}
+                        </span>
+
+                    </td>
+
+                    <td>
+                        {{ partition.nodes }}
+                    </td>
+
+                    <td>
+                        {{ partition.cpus }}
+                    </td>
+
+                    <td>
+                        {{ partition.timelimit }}
+                    </td>
+
+                </tr>
+
+
+            {% empty %}
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty"
+                    >
+                        No partitions found.
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}
+

@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Jobs - Slurm Manager
+{% endblock %}
+
+
+{% block nav_jobs %}
+active
+{% endblock %}
+
+
+{% block page_title %}
+Slurm Jobs
+{% endblock %}
+
+
+{% block page_subtitle %}
+Current cluster workload
+{% endblock %}
+
+
+{% block content %}
+
+{% if error %}
+
+<div class="alert alert-error">
+
+    <strong>Slurm error:</strong>
+    {{ error }}
+
+</div>
+
+{% endif %}
+
+
+<section class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>Jobs</h2>
+
+            <p>
+                Current Slurm workload
+            </p>
+
+        </div>
+
+        <span class="count-badge">
+            {{ jobs|length }}
+        </span>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Job ID</th>
+                    <th>User</th>
+                    <th>Name</th>
+                    <th>State</th>
+                    <th>Runtime</th>
+                    <th>Nodes</th>
+                    <th>CPUs</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for job in jobs %}
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            {{ job.id }}
+                        </strong>
+                    </td>
+
+                    <td>
+                        {{ job.user }}
+                    </td>
+
+                    <td>
+                        {{ job.name }}
+                    </td>
+
+                    <td>
+
+                        {% if job.state|upper == "RUNNING" %}
+
+                            <span class="badge badge-running">
+                                RUNNING
+                            </span>
+
+                        {% elif job.state|upper == "PENDING" %}
+
+                            <span class="badge badge-pending">
+                                PENDING
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge badge-other">
+                                {{ job.state }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+                        {{ job.runtime }}
+                    </td>
+
+                    <td>
+                        {{ job.nodes }}
+                    </td>
+
+                    <td>
+                        {{ job.cpus }}
+                    </td>
+
+                </tr>
+
+
+            {% empty %}
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="empty"
+                    >
+                        No jobs currently visible.
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}
+

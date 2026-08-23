@@ -1,0 +1,129 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}Slurm Manager{% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'dashboard/dashboard.css' %}"
+    >
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- =====================================================
+         TOP BAR
+         ===================================================== -->
+
+    <header class="topbar">
+
+        <div class="brand">
+            Slurm Manager
+        </div>
+
+        <nav class="main-nav">
+
+            <a
+                href="{% url 'dashboard:index' %}"
+                class="{% block nav_dashboard %}{% endblock %}"
+            >
+                Dashboard
+            </a>
+
+            <a
+                href="{% url 'nodes:list' %}"
+                class="{% block nav_nodes %}{% endblock %}"
+            >
+                Nodes
+            </a>
+
+            <a
+                href="{% url 'partitions:list' %}"
+                class="{% block nav_partitions %}{% endblock %}"
+            >
+                Partitions
+            </a>
+
+            <a
+                href="{% url 'jobs:list' %}"
+                class="{% block nav_jobs %}{% endblock %}"
+            >
+                Jobs
+            </a>
+
+	    <a
+  	        href="{% url 'accounts:list' %}"
+    		class="{% block nav_accounts %}{% endblock %}"
+	    >
+	        Accounts
+	    </a>
+
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
+
+    <header class="page-header">
+
+        <div>
+
+            <h1>
+                {% block page_title %}
+                Slurm Manager
+                {% endblock %}
+            </h1>
+
+            <p class="subtitle">
+                {% block page_subtitle %}
+                HPC cluster management
+                {% endblock %}
+            </p>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <button
+                class="refresh-button"
+                onclick="window.location.reload()"
+            >
+                ↻ Refresh
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         PAGE CONTENT
+         ===================================================== -->
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+</body>
+</html>
+

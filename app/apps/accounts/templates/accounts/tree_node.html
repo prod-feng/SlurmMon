@@ -1,0 +1,64 @@
+<div class="account-tree-node">
+
+    <div class="account-tree-row">
+
+        <span class="account-tree-icon">
+            {% if account.children %}
+                ▼
+            {% else %}
+                •
+            {% endif %}
+        </span>
+
+        <span class="account-tree-name">
+            {{ account.name }}
+        </span>
+
+        {% if account.parent %}
+            <span class="account-tree-parent">
+                parent: {{ account.parent }}
+            </span>
+        {% endif %}
+
+        {% if account.users %}
+            <span class="account-tree-users">
+                {{ account.users|length }} user{{ account.users|length|pluralize }}
+            </span>
+        {% endif %}
+
+    </div>
+
+
+    {% if account.users %}
+
+        <div class="account-tree-users-list">
+
+            {% for user in account.users %}
+
+                <span class="tree-user">
+                    👤 {{ user }}
+                </span>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    {% if account.children %}
+
+        <div class="account-tree-children">
+
+            {% for child in account.children %}
+
+                {% include "accounts/tree_node.html" with account=child %}
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+</div>
+

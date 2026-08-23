@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Nodes - Slurm Manager
+{% endblock %}
+
+
+{% block nav_nodes %}
+active
+{% endblock %}
+
+
+{% block page_title %}
+Cluster Nodes
+{% endblock %}
+
+
+{% block page_subtitle %}
+Current status of compute nodes
+{% endblock %}
+
+
+{% block content %}
+
+{% if error %}
+
+<div class="alert alert-error">
+
+    <strong>Slurm error:</strong>
+    {{ error }}
+
+</div>
+
+{% endif %}
+
+
+<section class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>Nodes</h2>
+
+            <p>
+                Current cluster node status
+            </p>
+
+        </div>
+
+        <span class="count-badge">
+            {{ nodes|length }}
+        </span>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Node</th>
+                    <th>State</th>
+                    <th>CPUs</th>
+                    <th>Memory</th>
+                    <th>Partitions</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for node in nodes %}
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            {{ node.name }}
+                        </strong>
+                    </td>
+
+
+                    <td>
+
+                        {% if "IDLE" in node.state|upper %}
+
+                            <span class="badge badge-idle">
+                                {{ node.state }}
+                            </span>
+
+                        {% elif "DOWN" in node.state|upper %}
+
+                            <span class="badge badge-down">
+                                {{ node.state }}
+                            </span>
+
+                        {% elif "ALLOC" in node.state|upper %}
+
+                            <span class="badge badge-allocated">
+                                {{ node.state }}
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge badge-other">
+                                {{ node.state }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+                        {{ node.cpus }}
+                    </td>
+
+
+                    <td>
+                        {{ node.memory_mb }} MB
+                    </td>
+
+
+                    <td>
+                        {{ node.partition }}
+                    </td>
+
+                </tr>
+
+
+            {% empty %}
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty"
+                    >
+                        No nodes found.
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}
+

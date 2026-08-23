@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>HPC Cluster</h1>
+
+{% if error %}
+<div class="alert error">
+    {{ error }}
+</div>
+{% endif %}
+
+<div class="cards">
+
+    {% for item in status %}
+
+    <div class="card">
+        <div class="card-title">
+            Nodes
+        </div>
+        <div class="card-value">
+            {{ item.nodes }}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            CPUs
+        </div>
+        <div class="card-value">
+            {{ item.cpus }}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            Memory
+        </div>
+        <div class="card-value">
+            {{ item.memory }}
+        </div>
+    </div>
+
+    {% empty %}
+
+    <div class="card">
+        <div class="card-title">
+            Cluster
+        </div>
+        <div class="card-value">
+            Unavailable
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+
