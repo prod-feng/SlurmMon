@@ -32,10 +32,3 @@ singularity exec --bind "${SOURCE}:/workspace" \
     --bind /run/munge:/run/munge \
     "${IMAGE}" \
     python /workspace/manage.py runserver 0.0.0.0:8000
-
-
-
-
- #singularity exec --bind /vast/cmshared/shared-rocky9-x86_64/apps:/cm/shared/apps:ro --bind /etc/passwd:/etc/passwd:ro     --bind /usr/lib64/libmunge.so.2:/usr/lib64/libmunge.so.2:ro       --bind /etc/passwd:/etc/passwd:ro     --bind /etc/group:/etc/group:ro    --bind /run/munge:/run/munge  apptainer/slurm-manager.sif /bin/bash
-
-
