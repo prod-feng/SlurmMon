@@ -2,12 +2,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
+from dashboard.services import (
+    SlurmError,
+    get_node_gpu_info,
+    run_slurm,
+)
+
 from .services import NodeService
 
-
-from django.shortcuts import render
-
-from dashboard.services import SlurmError, run_slurm
 
 @login_required
 def node_list(request):
@@ -17,13 +19,20 @@ def node_list(request):
 
     try:
 
+        # -------------------------------------------------
+        # Get nodes and partitions.
+        #
+        # A node appears once per partition.
+        # We deduplicate using nodes_by_name.
+        # -------------------------------------------------
+
         output = run_slurm([
             "sinfo",
             "-a",
             "-N",
             "-h",
             "-o",
-            "%N|%T|%c|%m|%P",
+            "%N|%T|%c|%m|%P|%G",
         ])
 
         for line in output.splitlines():
@@ -35,7 +44,7 @@ def node_list(request):
 
             parts = line.split("|")
 
-            if len(parts) != 5:
+            if len(parts) != 6:
                 continue
 
             name = parts[0].strip()
@@ -43,9 +52,14 @@ def node_list(request):
             cpus = parts[2].strip()
             memory = parts[3].strip()
             partition = parts[4].strip().rstrip("*")
+            gres = parts[5].strip()
 
             if not name:
                 continue
+
+            # -------------------------------------------------
+            # First occurrence of the physical node.
+            # -------------------------------------------------
 
             if name not in nodes_by_name:
 
@@ -54,34 +68,65 @@ def node_list(request):
                     "state": state,
                     "cpus": cpus,
                     "memory_mb": memory,
+                    "gres": gres,
                     "partitions": [],
                 }
 
             node = nodes_by_name[name]
 
+            # -------------------------------------------------
             # Add this partition only once.
+            # -------------------------------------------------
+
             if (
                 partition
                 and partition not in node["partitions"]
             ):
                 node["partitions"].append(partition)
 
-
         nodes = list(nodes_by_name.values())
 
-        # Convert the partition list into display text.
+        # -------------------------------------------------
+        # Get GPU allocation information.
+        #
+        # scontrol show node returns one record per
+        # physical node, so there is no partition
+        # duplication here.
+        # -------------------------------------------------
+
+        gpu_nodes = get_node_gpu_info()
+
+        # -------------------------------------------------
+        # Prepare display data.
+        # -------------------------------------------------
+
         for node in nodes:
 
             node["partition"] = ", ".join(
                 node["partitions"]
             )
 
+            gpu = gpu_nodes.get(
+                node["name"]
+            )
+
+            if gpu:
+
+                node["gpus"] = gpu
+
+            else:
+
+                node["gpus"] = {
+                    "type": None,
+                    "total": 0,
+                    "allocated": 0,
+                    "available": 0,
+                }
 
     except SlurmError as exc:
 
         nodes = []
         error = str(exc)
-
 
     context = {
         "nodes": nodes,
@@ -97,44 +142,74 @@ def node_list(request):
 
 @login_required
 def drain_node(request, node):
+
     if request.method != "POST":
         return redirect("nodes:list")
 
     if not request.user.is_staff:
-        messages.error(request, "Administrator privileges required.")
+        messages.error(
+            request,
+            "Administrator privileges required.",
+        )
+
         return redirect("nodes:list")
 
-    reason = request.POST.get("reason", "")
+    reason = request.POST.get(
+        "reason",
+        "",
+    )
 
     try:
-        NodeService().drain(node, reason)
+
+        NodeService().drain(
+            node,
+            reason,
+        )
+
         messages.success(
             request,
             f"{node} has been placed in DRAIN state.",
         )
+
     except Exception as exc:
-        messages.error(request, str(exc))
+
+        messages.error(
+            request,
+            str(exc),
+        )
 
     return redirect("nodes:list")
 
 
 @login_required
 def resume_node(request, node):
+
     if request.method != "POST":
         return redirect("nodes:list")
 
     if not request.user.is_staff:
-        messages.error(request, "Administrator privileges required.")
+        messages.error(
+            request,
+            "Administrator privileges required.",
+        )
+
         return redirect("nodes:list")
 
     try:
+
         NodeService().resume(node)
+
         messages.success(
             request,
             f"{node} has been resumed.",
         )
+
     except Exception as exc:
-        messages.error(request, str(exc))
+
+        messages.error(
+            request,
+            str(exc),
+        )
 
     return redirect("nodes:list")
 

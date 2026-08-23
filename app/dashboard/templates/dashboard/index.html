@@ -93,6 +93,60 @@ HPC cluster overview
     </div>
 
 
+    <!-- GPUs -->
+
+    <div class="metric-card">
+
+        <div class="metric-header">
+            <span>GPUs</span>
+
+            <span class="metric-icon">
+                🎮
+            </span>
+        </div>
+
+        <div class="metric-value">
+            {{ gpu_stats.total }}
+        </div>
+
+        <div class="metric-details">
+
+            <span class="status allocated">
+                ● {{ gpu_stats.allocated }} Allocated
+            </span>
+
+            <span class="status idle">
+                ● {{ gpu_stats.available }} Available
+            </span>
+
+        </div>
+
+        {% if gpu_stats.by_type %}
+
+        <div class="metric-label gpu-types">
+
+            {% for gpu_type, stats in gpu_stats.by_type.items %}
+
+            <span>
+                {{ gpu_type }}:
+                {{ stats.allocated }}/{{ stats.total }}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="metric-label">
+            No GPUs configured
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
     <!-- Jobs -->
 
     <div class="metric-card">
@@ -189,7 +243,8 @@ HPC cluster overview
                 </h3>
 
                 <p>
-                    View cluster nodes, state, CPU and memory information.
+                    View cluster nodes, state, CPU, memory
+                    and GPU information.
                 </p>
 
             </div>

@@ -27,6 +27,13 @@ def dashboard(request):
             "total": 0,
         },
 
+        "gpus": {
+            "total": 0,
+            "allocated": 0,
+            "available": 0,
+            "by_type": {},
+        },
+
         "jobs": {
             "total": 0,
             "running": 0,
@@ -50,6 +57,8 @@ def dashboard(request):
         "node_stats": summary["nodes"],
 
         "cpu_stats": summary["cpus"],
+
+        "gpu_stats": summary["gpus"],
 
         "job_stats": summary["jobs"],
 

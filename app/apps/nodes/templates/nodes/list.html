@@ -66,6 +66,7 @@ Current status of compute nodes
                     <th>Node</th>
                     <th>State</th>
                     <th>CPUs</th>
+		    <th>GPUs</th>
                     <th>Memory</th>
                     <th>Partitions</th>
                 </tr>
@@ -121,6 +122,29 @@ Current status of compute nodes
                         {{ node.cpus }}
                     </td>
 
+<td>
+    {% if node.gpus.total > 0 %}
+
+        <strong>
+            {{ node.gpus.allocated }}/{{ node.gpus.total }}
+        </strong>
+
+        {% if node.gpus.type %}
+            <span>
+                {{ node.gpus.type }}
+            </span>
+        {% endif %}
+
+        <small>
+            {{ node.gpus.available }} available
+        </small>
+
+    {% else %}
+
+        <span>—</span>
+
+    {% endif %}
+</td>		    
 
                     <td>
                         {{ node.memory_mb }} MB

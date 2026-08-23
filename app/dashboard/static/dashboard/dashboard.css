@@ -1306,3 +1306,18 @@ td strong {
 
 }
 
+.gpu-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.gpu-types span {
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    font-size: 0.8rem;
+}
+
+
