@@ -13,3 +13,5 @@ run command:
 ```
 
 to start the container.
+
+<img width="953" height="678" alt="Screenshot-SlurmMon" src="https://github.com/user-attachments/assets/393754fa-321f-408e-8ebf-d40b7ad4e771" />
