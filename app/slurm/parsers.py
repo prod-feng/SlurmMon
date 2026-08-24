@@ -29,6 +29,9 @@ class JobInfo:
     state: str
     elapsed: str
     nodes: str
+    cpus: str
+    gpus: str
+    nodelist: str    
     reason: str
 
 
@@ -87,8 +90,13 @@ def parse_jobs(output: str) -> list[JobInfo]:
     for line in output.splitlines():
         fields = _split(line)
 
-        if len(fields) != 8:
+        if len(fields) != 11:
             continue
+        gpus = fields[8].strip()
+
+        # Slurm reports N/A for CPU-only jobs.
+        if not gpus or gpus.upper() == "N/A":
+            gpus = ""
 
         jobs.append(
             JobInfo(
@@ -99,7 +107,10 @@ def parse_jobs(output: str) -> list[JobInfo]:
                 state=fields[4],
                 elapsed=fields[5],
                 nodes=fields[6],
-                reason=fields[7],
+                cpus=fields[7],
+                gpus=gpus,
+                nodelist=fields[9],                
+                reason=fields[10],
             )
         )
 

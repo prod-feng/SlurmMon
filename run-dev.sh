@@ -7,7 +7,7 @@ export DJANGO_DEBUG=true
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-IMAGE="${PROJECT_ROOT}/apptainer/slurm-manager.sif"
+IMAGE="${PROJECT_ROOT}/apptainer/slurm-manager-ldap.sif"
 SOURCE="${PROJECT_ROOT}/app"
 
 if [[ ! -f "$IMAGE" ]]; then
@@ -25,6 +25,8 @@ echo "  http://0.0.0.0:8000/"
 echo
 
 singularity exec --bind "${SOURCE}:/workspace" \
+    --bind /etc/nsswitch.conf:/etc/nsswitch.conf:ro \
+    --bind /run/nslcd:/run/nslcd:ro \
     --bind /usr/lib64/libmunge.so.2:/usr/lib64/libmunge.so.2:ro \
     --bind /etc/passwd:/etc/passwd:ro \
     --bind /etc/group:/etc/group:ro \

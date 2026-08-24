@@ -63,13 +63,161 @@ Current cluster workload
             <thead>
 
                 <tr>
-                    <th>Job ID</th>
-                    <th>User</th>
-                    <th>Name</th>
-                    <th>State</th>
-                    <th>Runtime</th>
-                    <th>Nodes</th>
-                    <th>CPUs</th>
+
+                    <!-- Job ID -->
+
+                    <th>
+                        <a
+                            href="?sort=id&direction={% if sort == 'id' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                        >
+                            Job ID
+
+                            {% if sort == "id" %}
+                                {% if direction == "asc" %}
+                                    ↑
+                                {% else %}
+                                    ↓
+                                {% endif %}
+                            {% endif %}
+
+                        </a>
+                    </th>
+
+
+                    <!-- User -->
+
+                    <th>
+                        <a
+                            href="?sort=user&direction={% if sort == 'user' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                        >
+                            User
+
+                            {% if sort == "user" %}
+                                {% if direction == "asc" %}
+                                    ↑
+                                {% else %}
+                                    ↓
+                                {% endif %}
+                            {% endif %}
+
+                        </a>
+                    </th>
+
+
+                    <!-- Name -->
+
+                    <th>
+                        <a
+                            href="?sort=name&direction={% if sort == 'name' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                        >
+                            Name
+
+                            {% if sort == "name" %}
+                                {% if direction == "asc" %}
+                                    ↑
+                                {% else %}
+                                    ↓
+                                {% endif %}
+                            {% endif %}
+
+                        </a>
+                    </th>
+
+
+                    <!-- State -->
+
+                    <th>
+                        <a
+                            href="?sort=state&direction={% if sort == 'state' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                        >
+                            State
+
+                            {% if sort == "state" %}
+                                {% if direction == "asc" %}
+                                    ↑
+                                {% else %}
+                                    ↓
+                                {% endif %}
+                            {% endif %}
+
+                        </a>
+                    </th>
+
+
+                    <!-- Runtime -->
+
+                    <th>
+                        <a
+                            href="?sort=runtime&direction={% if sort == 'runtime' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                        >
+                            Runtime
+
+                            {% if sort == "runtime" %}
+                                {% if direction == "asc" %}
+                                    ↑
+                                {% else %}
+                                    ↓
+                                {% endif %}
+                            {% endif %}
+
+                        </a>
+                    </th>
+
+
+                    <!-- Nodes -->
+
+                    <th>
+                        <a
+                            href="?sort=nodes&direction={% if sort == 'nodes' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                        >
+                            Nodes
+
+                            {% if sort == "nodes" %}
+                                {% if direction == "asc" %}
+                                    ↑
+                                {% else %}
+                                    ↓
+                                {% endif %}
+                            {% endif %}
+
+                        </a>
+                    </th>
+
+
+                    <!-- CPUs -->
+
+                    <th>
+                        <a
+                            href="?sort=cpus&direction={% if sort == 'cpus' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                        >
+                            CPUs
+
+                            {% if sort == "cpus" %}
+                                {% if direction == "asc" %}
+                                    ↑
+                                {% else %}
+                                    ↓
+                                {% endif %}
+                            {% endif %}
+
+                        </a>
+                    </th>
+<th>
+    <a
+        href="?sort=gpus&direction={% if sort == 'gpus' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+    >
+        GPUs
+
+        {% if sort == "gpus" %}
+            {% if direction == "asc" %}
+                ↑
+            {% else %}
+                ↓
+            {% endif %}
+        {% endif %}
+    </a>
+</th>		    
+
                 </tr>
 
             </thead>
@@ -83,17 +231,20 @@ Current cluster workload
 
                     <td>
                         <strong>
-                            {{ job.id }}
+                            {{ job.job_id }}
                         </strong>
                     </td>
+
 
                     <td>
                         {{ job.user }}
                     </td>
 
+
                     <td>
                         {{ job.name }}
                     </td>
+
 
                     <td>
 
@@ -119,18 +270,28 @@ Current cluster workload
 
                     </td>
 
+
                     <td>
-                        {{ job.runtime }}
+                        {{ job.elapsed }}
                     </td>
+
 
                     <td>
                         {{ job.nodes }}
                     </td>
 
+
                     <td>
-                        {{ job.cpus }}
+                        {{ job.cpus|default:"—" }}
                     </td>
 
+<td>
+    {% if job.gpus %}
+        {{ job.gpus }}
+    {% else %}
+        —
+    {% endif %}
+</td>
                 </tr>
 
 
@@ -139,7 +300,7 @@ Current cluster workload
                 <tr>
 
                     <td
-                        colspan="7"
+                        colspan="9"
                         class="empty"
                     >
                         No jobs currently visible.

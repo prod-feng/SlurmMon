@@ -71,7 +71,7 @@ class SlurmClient:
             "squeue",
             "-h",
             "-o",
-            "%i|%u|%P|%j|%T|%M|%D|%R",
+            "%i|%u|%P|%j|%T|%M|%D|%C|%b|%N|%R",
         )
 
     def cluster_status(self) -> str:
