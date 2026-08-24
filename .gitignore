@@ -2,4 +2,6 @@
 *old*
 *.sif*
 *.nouse*
-
+*.pid
+*.log
+run-dev.sh
