@@ -1,6 +1,6 @@
 <div class="account-tree-node">
 
-    <div class="account-tree-row">
+    <div class="account-tree-row {{ account.zebra_class }}">
 
         <span class="account-tree-icon">
             {% if account.children %}
@@ -22,16 +22,16 @@
 
         {% if account.users %}
             <span class="account-tree-users">
-                {{ account.users|length }} user{{ account.users|length|pluralize }}
+                {{ account.users|length }}
+                user{{ account.users|length|pluralize }}
             </span>
         {% endif %}
 
     </div>
 
-
     {% if account.users %}
 
-        <div class="account-tree-users-list">
+        <div class="account-tree-users-list {{ account.zebra_class }}">
 
             {% for user in account.users %}
 
@@ -44,7 +44,6 @@
         </div>
 
     {% endif %}
-
 
     {% if account.children %}
 

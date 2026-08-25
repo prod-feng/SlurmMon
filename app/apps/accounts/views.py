@@ -77,4 +77,3 @@ def account_list(request):
         context,
     )
 
-# Create your views here.

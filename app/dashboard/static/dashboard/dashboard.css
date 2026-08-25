@@ -94,6 +94,7 @@ body {
     color: #ffffff;
 }
 
+
 /* =========================================================
    Page Header
    ========================================================= */
@@ -187,9 +188,6 @@ body {
     margin-bottom: 28px;
 }
 
-
-/* Individual card */
-
 .metric-card {
     min-height: 170px;
 
@@ -216,9 +214,6 @@ body {
     transform: translateY(-1px);
 }
 
-
-/* Card header */
-
 .metric-header {
     display: flex;
 
@@ -232,9 +227,6 @@ body {
     font-size: 14px;
     font-weight: 600;
 }
-
-
-/* Icon */
 
 .metric-icon {
     display: flex;
@@ -254,9 +246,6 @@ body {
     font-size: 18px;
 }
 
-
-/* Large number */
-
 .metric-value {
     margin-top: 6px;
 
@@ -271,9 +260,6 @@ body {
     letter-spacing: -0.02em;
 }
 
-
-/* Small label */
-
 .metric-label {
     margin-top: 10px;
 
@@ -281,9 +267,6 @@ body {
 
     font-size: 13px;
 }
-
-
-/* Status details */
 
 .metric-details {
     display: flex;
@@ -568,56 +551,6 @@ td strong {
 }
 
 
-@media (max-width: 800px) {
-
-    .page {
-        padding: 0 16px 30px;
-    }
-
-    .topbar {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 12px;
-
-        padding: 18px 0;
-
-        margin-bottom: 26px;
-    }
-
-    .main-nav {
-        width: 100%;
-        overflow-x: auto;
-    }
-
-    .page-header {
-        flex-direction: column;
-    }
-
-    .header-actions {
-        width: 100%;
-    }
-
-    .refresh-button {
-        width: 100%;
-    }
-
-    .metrics-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .panel-header {
-        padding: 16px;
-    }
-
-    th,
-    td {
-        padding: 11px 12px;
-    }
-}
-
-
 /* =========================================================
    Quick Links
    ========================================================= */
@@ -648,7 +581,6 @@ td strong {
     font-size: 13px;
 }
 
-
 .quick-links-grid {
     display: grid;
 
@@ -657,7 +589,6 @@ td strong {
 
     gap: 18px;
 }
-
 
 .quick-link-card {
     display: flex;
@@ -689,7 +620,6 @@ td strong {
         transform 0.15s ease;
 }
 
-
 .quick-link-card:hover {
     border-color: #bfdbfe;
 
@@ -698,7 +628,6 @@ td strong {
 
     transform: translateY(-2px);
 }
-
 
 .quick-link-icon {
     display: flex;
@@ -720,13 +649,11 @@ td strong {
     font-size: 21px;
 }
 
-
 .quick-link-content {
     min-width: 0;
 
     flex: 1;
 }
-
 
 .quick-link-content h3 {
     margin: 0;
@@ -738,7 +665,6 @@ td strong {
     font-weight: 700;
 }
 
-
 .quick-link-content p {
     margin: 5px 0 0;
 
@@ -748,7 +674,6 @@ td strong {
 
     line-height: 1.45;
 }
-
 
 .quick-link-arrow {
     flex: 0 0 auto;
@@ -762,7 +687,6 @@ td strong {
         transform 0.15s ease;
 }
 
-
 .quick-link-card:hover .quick-link-arrow {
     color: #2563eb;
 
@@ -771,19 +695,7 @@ td strong {
 
 
 /* =========================================================
-   Quick Links - Responsive
-   ========================================================= */
-
-@media (max-width: 900px) {
-
-    .quick-links-grid {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-/* =========================================================
-   Accounts
+   Accounts - Filters
    ========================================================= */
 
 .filter-form {
@@ -999,23 +911,85 @@ td strong {
 
 
 /* =========================================================
+   Accounts / Associations / Users Tables
+   ========================================================= */
+
+.tab-panel table tbody tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+.tab-panel table tbody tr:nth-child(even) td {
+    background-color: #f3f6fa;
+}
+
+.tab-panel table tbody tr:hover td {
+    background-color: #e8f1fb;
+}
+
+
+/* =========================================================
+   Association Table
+   ========================================================= */
+
+.association-table {
+    min-width: 1100px;
+}
+
+.association-table tbody tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+.association-table tbody tr:nth-child(even) td {
+    background-color: #f3f6fa;
+}
+
+.association-table tbody tr:hover td {
+    background-color: #dbeafe;
+}
+
+
+/* =========================================================
+   QOS Table
+   ========================================================= */
+
+.qos-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.qos-table tbody tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+.qos-table tbody tr:nth-child(even) td {
+    background-color: #f3f6fa;
+}
+
+.qos-table tbody tr:hover td {
+    background-color: #dbeafe;
+}
+
+
+/* =========================================================
    Account Hierarchy
    ========================================================= */
 
 .account-tree {
-    padding:  0;
+    padding: 0;
 }
 
 .account-tree-node {
     position: relative;
 
-    padding: 18px 0;
+    padding: 0px 0;
 
-    border-top: 1px solid #e2e8f0;
+    border-top: 0px solid #e2e8f0;
 }
 
 
-/* Account row */
+/* =========================================================
+   Account Tree Row
+   ========================================================= */
 
 .account-tree-row {
     position: relative;
@@ -1024,24 +998,17 @@ td strong {
 
     align-items: center;
 
-    gap: 10px;
+    gap: 8px;
 
-    min-height: 38px;
+    min-height: 32px;
 
-    padding: 6px 10px;
+    padding: 4px 8px;
 
-    border-radius: 8px;
+    border-radius: 6px;
 
     transition:
-        background 0.15s ease;
+        background-color 0.15s ease;
 }
-
-.account-tree-row:hover {
-    background: #f8fafc;
-}
-
-
-/* Account icon */
 
 .account-tree-icon {
     display: inline-flex;
@@ -1060,9 +1027,6 @@ td strong {
     font-size: 13px;
 }
 
-
-/* Account name */
-
 .account-tree-name {
     color: #0f172a;
 
@@ -1071,9 +1035,6 @@ td strong {
     font-weight: 650;
 }
 
-
-/* Parent information */
-
 .account-tree-parent {
     margin-left: 4px;
 
@@ -1081,9 +1042,6 @@ td strong {
 
     font-size: 12px;
 }
-
-
-/* User count */
 
 .account-tree-users {
     margin-left: auto;
@@ -1100,24 +1058,13 @@ td strong {
    Account Tree Connectors
    ========================================================= */
 
-/*
- * Children are indented from their parent.
- */
-
 .account-tree-children {
     position: relative;
-
+    gap: 0;
     margin-left: 18px;
 
     padding-left: 26px;
 }
-
-
-/*
- * Main vertical connector.
- *
- * This line runs alongside all children.
- */
 
 .account-tree-children::before {
     content: "";
@@ -1133,12 +1080,6 @@ td strong {
     background: #cbd5e1;
 }
 
-
-/*
- * Horizontal connector from the
- * vertical line to each child.
- */
-
 .account-tree-children
 > .account-tree-node::before {
 
@@ -1146,7 +1087,7 @@ td strong {
 
     position: absolute;
 
-    top: 19px;
+    top: 0px;
     left: -26px;
 
     width: 26px;
@@ -1154,12 +1095,6 @@ td strong {
 
     background: #cbd5e1;
 }
-
-
-/*
- * The last child needs to terminate
- * the vertical connector.
- */
 
 .account-tree-children
 > .account-tree-node:last-child::after {
@@ -1188,11 +1123,11 @@ td strong {
 
     flex-wrap: wrap;
 
-    gap: 6px;
+    gap: 0px;
 
-    margin: 2px 0 8px 40px;
+    margin: 0px 0 4px 0px;
 
-    padding-bottom: 4px;
+    padding-bottom: 0px;
 }
 
 .tree-user {
@@ -1215,114 +1150,232 @@ td strong {
     line-height: 1.3;
 }
 
-
 /* =========================================================
-   Account Tree - Deeper Levels
+   Account Tree Zebra Striping
    ========================================================= */
 
 /*
- * Give nested levels a little more breathing room
- * without making the tree excessively wide.
+ * Top-level accounts
+ *
+ * Example:
+ *
+ * dept_A
+ * dept_B
+ * dept_C
  */
 
-.account-tree-children
-.account-tree-children {
-    margin-left: 18px;
+.account-tree-row.tree-row-odd {
+    background-color: #dbeafe;
 }
 
+.account-tree-row.tree-row-even {
+    background-color: #bfdbfe;
+}
+
+
+/*
+ * Nested accounts need a lighter palette.
+ *
+ * These classes are assigned by Python based on the
+ * hierarchy level.
+ */
+
+.account-tree-row.tree-level-0-odd {
+    background-color: #dbeafe !important;
+}
+
+.account-tree-row.tree-level-0-even {
+    background-color: #bfdbfe !important;
+}
+
+.account-tree-row.tree-level-1-odd {
+    background-color: #e8f3ff !important;
+}
+
+.account-tree-row.tree-level-1-even {
+    background-color: #d4e9ff !important;
+}
+
+
+.account-tree-row.tree-level-2-odd {
+    background-color: #f0f8ff !important;
+}
+
+.account-tree-row.tree-level-2-even {
+    background-color: #dfefff !important;
+}
+
+
+.account-tree-row.tree-level-3-odd {
+    background-color: #f5faff !important;
+}
+
+.account-tree-row.tree-level-3-even {
+    background-color: #e8f4ff !important;
+}
+
+
+.account-tree-row.tree-level-4-odd {
+    background-color: #f8fbff !important;
+}
+
+.account-tree-row.tree-level-4-even {
+    background-color: #edf6ff !important;
+}
+
+.account-tree-row.tree-level-5-odd {
+    background-color: #faf5ff !important;
+}
+
+.account-tree-row.tree-level-5-even {
+    background-color: #f3e8ff !important;
+}
+
+
+.account-tree-users-list.tree-level-1-odd {
+    background-color: #e8f3ff !important;
+}
+
+.account-tree-users-list.tree-level-1-even {
+    background-color: #d4e9ff !important;
+}
+
+.tree-user {
+    background-color: rgba(255, 255, 255, 0.55) !important;
+
+    border: 1px solid rgba(37, 99, 235, 0.18);
+
+    color: #1d4ed8;
+}
+
+/* ---------------------------------------------------------
+   Hover
+   --------------------------------------------------------- */
+.account-tree-users-list.tree-level-1-odd:hover,
+.account-tree-users-list.tree-level-1-even:hover,
+.account-tree-row.tree-level-0-odd:hover,
+.account-tree-row.tree-level-0-even:hover,
+.account-tree-row.tree-level-1-odd:hover,
+.account-tree-row.tree-level-1-even:hover,
+.account-tree-row.tree-level-2-odd:hover,
+.account-tree-row.tree-level-2-even:hover,
+.account-tree-row.tree-level-3-odd:hover,
+.account-tree-row.tree-level-3-even:hover,
+.account-tree-row.tree-level-4-odd:hover,
+.account-tree-row.tree-level-4-even:hover,
+.account-tree-row.tree-level-5-odd:hover,
+.account-tree-row.tree-level-5-even:hover {
+    background-color: #dbeafe !important;
+}
 
 /* =========================================================
-   Responsive Filters
+   Column Selector
    ========================================================= */
 
-@media (max-width: 1000px) {
+.column-selector {
+    position: relative;
 
-    .filter-grid {
-        grid-template-columns:
-            repeat(2, minmax(180px, 1fr));
-    }
-
+    flex: 0 0 auto;
 }
 
-
-/* =========================================================
-   Responsive Accounts
-   ========================================================= */
-
-@media (max-width: 700px) {
-
-    .tabs {
-        padding: 0 8px;
-    }
-
-    .tab-button {
-        min-height: 50px;
-
-        padding: 0 12px;
-
-        font-size: 13px;
-    }
-
-    .tab-panel {
-        padding: 16px;
-    }
-
-    .account-tree-users {
-        display: none;
-    }
-
+.column-selector-button {
+    min-width: 100px;
 }
 
+.column-selector-menu {
+    position: absolute;
 
-@media (max-width: 600px) {
+    z-index: 1000;
 
-    .filter-grid {
-        grid-template-columns: 1fr;
-    }
+    top: calc(100% + 8px);
+    right: 0;
 
-    .account-tree-children {
-        margin-left: 10px;
+    min-width: 220px;
 
-        padding-left: 20px;
-    }
+    padding: 8px;
 
-    .account-tree-children
-    > .account-tree-node::before {
+    background: #ffffff;
 
-        left: -20px;
+    border: 1px solid #cbd5e1;
 
-        width: 20px;
-    }
+    border-radius: 10px;
 
-    .account-tree-children
-    > .account-tree-node:last-child::after {
-
-        left: -20px;
-    }
-
-    .account-tree-users-list {
-        margin-left: 30px;
-    }
-
+    box-shadow:
+        0 8px 20px rgba(15, 23, 42, 0.12);
 }
 
-.gpu-types {
+.column-selector-menu label {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px 10px;
+
+    border-radius: 6px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    cursor: pointer;
 }
 
-.gpu-types span {
-    padding: 3px 8px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.06);
-    font-size: 0.8rem;
+.column-selector-menu label:hover {
+    background: #f1f5f9;
+}
+
+.column-selector-menu input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+
+    accent-color: #2563eb;
+
+    cursor: pointer;
+}
+
+.column-selector-divider {
+    height: 1px;
+
+    margin: 7px 4px;
+
+    background: #e2e8f0;
+}
+
+.column-selector-reset {
+    width: 100%;
+
+    padding: 8px 10px;
+
+    border: 0;
+
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: #2563eb;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.column-selector-reset:hover {
+    background: #eff6ff;
 }
 
 
 /* =========================================================
-   Jobs table
+   Jobs Table
    ========================================================= */
 
 .jobs-table-wrapper {
@@ -1335,11 +1388,6 @@ td strong {
     border-collapse: collapse;
     font-size: 14px;
 }
-
-
-/* ---------------------------------------------------------
-   Header
-   --------------------------------------------------------- */
 
 .jobs-table thead th {
     padding: 13px 16px;
@@ -1378,11 +1426,6 @@ td strong {
     font-weight: 700;
 }
 
-
-/* ---------------------------------------------------------
-   Zebra striping
-   --------------------------------------------------------- */
-
 .jobs-table tbody tr:nth-child(odd) td {
     background-color: #ffffff;
 }
@@ -1391,19 +1434,9 @@ td strong {
     background-color: #f1f5f9;
 }
 
-
-/* ---------------------------------------------------------
-   Hover
-   --------------------------------------------------------- */
-
 .jobs-table tbody tr:hover td {
     background-color: #dbeafe;
 }
-
-
-/* ---------------------------------------------------------
-   Cells
-   --------------------------------------------------------- */
 
 .jobs-table tbody td {
     padding: 12px 16px;
@@ -1418,11 +1451,6 @@ td strong {
 .jobs-table tbody tr:last-child td {
     border-bottom: none;
 }
-
-
-/* ---------------------------------------------------------
-   Job ID
-   --------------------------------------------------------- */
 
 .jobs-table .job-id-cell {
     white-space: nowrap;
@@ -1442,28 +1470,13 @@ td strong {
     text-decoration: underline;
 }
 
-
-/* ---------------------------------------------------------
-   Job name
-   --------------------------------------------------------- */
-
 .jobs-table .job-name-cell {
     font-weight: 500;
 }
 
-
-/* ---------------------------------------------------------
-   Numeric / resource columns
-   --------------------------------------------------------- */
-
 .jobs-table .numeric-cell {
     white-space: nowrap;
 }
-
-
-/* ---------------------------------------------------------
-   Empty state
-   --------------------------------------------------------- */
 
 .jobs-table .empty {
     padding: 32px 16px;
@@ -1474,11 +1487,6 @@ td strong {
 
     text-align: center;
 }
-
-
-/* ---------------------------------------------------------
-   Job status badges
-   --------------------------------------------------------- */
 
 .jobs-table .badge {
     display: inline-flex;
@@ -1500,25 +1508,22 @@ td strong {
 
 .jobs-table .badge-running {
     background: #dcfce7;
-
     color: #166534;
 }
 
 .jobs-table .badge-pending {
     background: #fef3c7;
-
     color: #92400e;
 }
 
 .jobs-table .badge-other {
     background: #e5e7eb;
-
     color: #374151;
 }
 
 
 /* =========================================================
-   Nodes table
+   Nodes Table
    ========================================================= */
 
 .nodes-table tbody tr:nth-child(odd) td {
@@ -1533,9 +1538,23 @@ td strong {
     background-color: #dbeafe;
 }
 
+.nodes-table .node-name-link {
+    color: #2563eb;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.nodes-table .node-name-link:hover {
+    color: #1d4ed8;
+
+    text-decoration: underline;
+}
+
 
 /* =========================================================
-   Partitions table
+   Partitions Table
    ========================================================= */
 
 .partitions-table tbody tr:nth-child(odd) td {
@@ -1550,23 +1569,23 @@ td strong {
     background-color: #dbeafe;
 }
 
-/* =========================================================
-   Node links
-   ========================================================= */
-
-.nodes-table .node-name-link {
+.partitions-table .partition-name-link {
     color: #2563eb;
+
     font-weight: 600;
+
     text-decoration: none;
 }
 
-.nodes-table .node-name-link:hover {
+.partitions-table .partition-name-link:hover {
     color: #1d4ed8;
+
     text-decoration: underline;
 }
 
+
 /* =========================================================
-   Node detail table
+   Node Detail Table
    ========================================================= */
 
 .node-detail-table {
@@ -1623,7 +1642,7 @@ td strong {
 
 
 /* =========================================================
-   Partition detail table
+   Partition Detail Table
    ========================================================= */
 
 .partition-detail-table {
@@ -1680,279 +1699,188 @@ td strong {
 
 
 /* =========================================================
-   Partition links
+   GPU Types
    ========================================================= */
 
-.partitions-table .partition-name-link {
-    color: #2563eb;
-
-    font-weight: 600;
-
-    text-decoration: none;
-}
-
-.partitions-table .partition-name-link:hover {
-    color: #1d4ed8;
-
-    text-decoration: underline;
-}
-
-/* =========================================================
-   Column Selector
-   ========================================================= */
-
-.tab-header {
-    position: relative;
-}
-
-
-.column-selector {
-    position: relative;
-
-    flex: 0 0 auto;
-}
-
-
-.column-selector-button {
-    min-width: 100px;
-}
-
-
-.column-selector-menu {
-    position: absolute;
-
-    z-index: 1000;
-
-    top: calc(100% + 8px);
-    right: 0;
-
-    min-width: 220px;
-
-    padding: 8px;
-
-    background: #ffffff;
-
-    border: 1px solid #cbd5e1;
-
-    border-radius: 10px;
-
-    box-shadow:
-        0 8px 20px rgba(15, 23, 42, 0.12);
-}
-
-
-.column-selector-menu label {
+.gpu-types {
     display: flex;
 
-    align-items: center;
+    flex-wrap: wrap;
 
-    gap: 9px;
+    gap: 8px;
 
-    padding: 8px 10px;
-
-    border-radius: 6px;
-
-    color: #334155;
-
-    font-size: 13px;
-
-    font-weight: 500;
-
-    cursor: pointer;
+    margin-top: 8px;
 }
 
+.gpu-types span {
+    padding: 3px 8px;
 
-.column-selector-menu label:hover {
-    background: #f1f5f9;
-}
+    border-radius: 999px;
 
+    background: rgba(255, 255, 255, 0.06);
 
-.column-selector-menu input[type="checkbox"] {
-    width: 15px;
-    height: 15px;
-
-    accent-color: #2563eb;
-
-    cursor: pointer;
-}
-
-
-.column-selector-divider {
-    height: 1px;
-
-    margin: 7px 4px;
-
-    background: #e2e8f0;
-}
-
-
-.column-selector-reset {
-    width: 100%;
-
-    padding: 8px 10px;
-
-    border: 0;
-
-    border-radius: 6px;
-
-    background: transparent;
-
-    color: #2563eb;
-
-    font-family: inherit;
-
-    font-size: 13px;
-
-    font-weight: 600;
-
-    text-align: left;
-
-    cursor: pointer;
-}
-
-
-.column-selector-reset:hover {
-    background: #eff6ff;
+    font-size: 0.8rem;
 }
 
 
 /* =========================================================
-   Accounts tables - Zebra striping
+   Clickable Metric Cards
    ========================================================= */
-/*
-.association-table tbody tr:nth-child(odd) td,
-.tab-panel table tbody tr:nth-child(odd) td {
-    background-color: #ffffff;
-}
-
-.association-table tbody tr:nth-child(even) td,
-.tab-panel table tbody tr:nth-child(even) td {
-    background-color: #f3f6fa;
-}
-*/
-
-/* Hover */
-/*
-.association-table tbody tr:hover td,
-.tab-panel table tbody tr:hover td {
-    background-color: #e8f1fb;
-}
-*/
-/* =========================================================
-   Accounts tables - Zebra striping
-   ========================================================= */
-
-.tab-panel table tbody tr:nth-child(odd) td {
-    background-color: #ffffff;
-}
-
-.tab-panel table tbody tr:nth-child(even) td {
-    background-color: #f3f6fa;
-}
-
-
-/* Hover */
-
-.tab-panel table tbody tr:hover td {
-    background-color: #e8f1fb;
-}
-
-/* =========================================================
-   Account Tree
-   ========================================================= */
-
-.account-tree-node > .account-tree-row {
-    background-color: #ffffff;
-}
-
-.account-tree-node:nth-child(even) > .account-tree-row {
-    background-color: #f3f6fa;
-}
-
-
-/* Hover */
-
-.account-tree-node > .account-tree-row:hover {
-    background-color: #e8f1fb;
-}
-
-/* =====================================================
-   ACCOUNT TREE ZEBRA STRIPING
-   Each top-level account and all of its descendants
-   share the same background color.
-   ===================================================== */
-
-.account-tree > .account-tree-node:nth-child(odd) {
-    background-color: #f8fafc;
-}
-
-.account-tree > .account-tree-node:nth-child(even) {
-    background-color: #ffffff;
-}
-
-
-/* Keep the same color through the entire hierarchy */
-
-.account-tree > .account-tree-node:nth-child(odd)
-.account-tree-node {
-    background-color: transparent;
-}
-
-.account-tree > .account-tree-node:nth-child(even)
-.account-tree-node {
-    background-color: transparent;
-}
-
-
-/* Make the entire group visually continuous */
-
-.account-tree > .account-tree-node {
-    border-radius: 6px;
-    margin-bottom: 4px;
-}
-
-.account-tree > .account-tree-node .account-tree-row {
-    background-color: transparent;
-}
-
-.account-tree > .account-tree-node .account-tree-users-list {
-    background-color: transparent;
-}
-
-.account-tree > .account-tree-node .account-tree-children {
-    background-color: transparent;
-}
-
-/* =====================================================
-   QOS Tab
-   ===================================================== */
-.qos-table tbody tr:nth-child(odd) {
-    background-color: #f8fafc;
-}
-
-.qos-table tbody tr:nth-child(even) {
-    background-color: #ffffff;
-}
-
-
-/* =====================================================
-   CLICKABLE METRIC CARDS
-   ===================================================== */
 
 .metric-card-link {
     display: block;
+
     color: inherit;
+
     text-decoration: none;
+
     cursor: pointer;
 }
 
 .metric-card-link:hover {
     color: inherit;
+
     text-decoration: none;
 }
 
 .metric-card-link:focus-visible {
     outline: 2px solid #2563eb;
+
     outline-offset: 2px;
+}
+
+
+/* =========================================================
+   Responsive - Quick Links
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .quick-links-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   Responsive - Accounts
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .filter-grid {
+        grid-template-columns:
+            repeat(2, minmax(180px, 1fr));
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .page {
+        padding: 0 16px 30px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+
+        padding: 18px 0;
+
+        margin-bottom: 26px;
+    }
+
+    .main-nav {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .page-header {
+        flex-direction: column;
+    }
+
+    .header-actions {
+        width: 100%;
+    }
+
+    .refresh-button {
+        width: 100%;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-header {
+        padding: 16px;
+    }
+
+    th,
+    td {
+        padding: 11px 12px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .tabs {
+        padding: 0 8px;
+    }
+
+    .tab-button {
+        min-height: 50px;
+
+        padding: 0 12px;
+
+        font-size: 13px;
+    }
+
+    .tab-panel {
+        padding: 16px;
+    }
+
+    .account-tree-users {
+        display: none;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .account-tree-children {
+        margin-left: 10px;
+
+        padding-left: 20px;
+    }
+
+    .account-tree-children
+    > .account-tree-node::before {
+
+        left: -20px;
+
+        width: 20px;
+    }
+
+    .account-tree-children
+    > .account-tree-node:last-child::after {
+
+        left: -20px;
+    }
+
+    .account-tree-users-list {
+        margin-left: 30px;
+    }
+
 }
 
