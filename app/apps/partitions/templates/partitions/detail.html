@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Partition {{ partition_name }} - Slurm Manager
+{% endblock %}
+
+
+{% block nav_partitions %}
+active
+{% endblock %}
+
+
+{% block page_title %}
+Partition Details
+{% endblock %}
+
+
+{% block page_subtitle %}
+Details for {{ partition_name }}
+{% endblock %}
+
+
+{% block content %}
+
+{% if error %}
+
+<div class="alert alert-error">
+
+    <strong>Slurm error:</strong>
+    {{ error }}
+
+</div>
+
+{% endif %}
+
+
+<section class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>{{ partition_name }}</h2>
+
+            <p>
+                Slurm partition configuration and status
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {% if partition %}
+
+    <div class="table-wrapper">
+
+        <table class="partition-detail-table">
+
+            <tbody>
+
+            {% for key, value in partition.items %}
+
+                <tr>
+
+                    <th>
+                        {{ key }}
+                    </th>
+
+                    <td>
+                        {{ value|default:"—" }}
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
+
+

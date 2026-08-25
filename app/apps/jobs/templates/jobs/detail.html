@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .job-detail {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+
+    .job-detail-header {
+        margin-bottom: 20px;
+    }
+
+    .job-detail-header h1 {
+        margin: 0;
+        color: #1f2937;
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    .job-detail-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .job-detail-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+    }
+
+    .job-detail-table th,
+    .job-detail-table td {
+        padding: 12px 16px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .job-detail-table th {
+        width: 220px;
+        background: #e5e7eb;
+        color: #374151;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    /* Alternating row colors */
+    .job-detail-table tr:nth-child(odd) th,
+    .job-detail-table tr:nth-child(odd) td {
+        background-color: #ffffff;
+    }
+
+    .job-detail-table tr:nth-child(even) th,
+    .job-detail-table tr:nth-child(even) td {
+        background-color: #f3f6fa;
+    }
+
+    .job-detail-table tr:hover th,
+    .job-detail-table tr:hover td {
+        background-color: #e8f1fb;
+    }
+
+    .job-detail-table tr:last-child th,
+    .job-detail-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .job-detail-table td {
+        color: #111827;
+        word-break: break-word;
+    }
+
+    .job-detail-error {
+        padding: 16px 20px;
+        border: 1px solid #fecaca;
+        border-radius: 8px;
+        background: #fef2f2;
+        color: #991b1b;
+    }
+
+    .job-detail-empty {
+        padding: 20px;
+        color: #6b7280;
+    }
+</style>
+
+<div class="job-detail">
+
+    {% if error %}
+
+        <div class="job-detail-error">
+            {{ error }}
+        </div>
+
+    {% elif job %}
+
+        <div class="job-detail-header">
+            <h1>Job {{ job.JobId }}</h1>
+        </div>
+
+        <div class="job-detail-card">
+            <table class="job-detail-table">
+                <tbody>
+
+                    {% for key, value in job.items %}
+                    <tr>
+                        <th>{{ key }}</th>
+                        <td>{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        <div class="job-detail-empty">
+            Job not found.
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
+

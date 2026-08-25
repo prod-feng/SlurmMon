@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Node {{ node_name }} - Slurm Manager
+{% endblock %}
+
+
+{% block nav_nodes %}
+active
+{% endblock %}
+
+
+{% block page_title %}
+Node Details
+{% endblock %}
+
+
+{% block page_subtitle %}
+Details for {{ node_name }}
+{% endblock %}
+
+
+{% block content %}
+
+{% if error %}
+
+<div class="alert alert-error">
+
+    <strong>Slurm error:</strong>
+    {{ error }}
+
+</div>
+
+{% endif %}
+
+
+<section class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>{{ node_name }}</h2>
+
+            <p>
+                Slurm node configuration and status
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {% if node %}
+
+    <div class="table-wrapper">
+
+        <table class="node-detail-table">
+
+            <tbody>
+
+            {% for key, value in node.items %}
+
+                <tr>
+
+                    <th>
+                        {{ key }}
+                    </th>
+
+                    <td>
+                        {{ value|default:"—" }}
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
+
