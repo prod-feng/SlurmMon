@@ -48,4 +48,25 @@ def job_list(request):
         context,
     )
 
+@login_required
+def job_detail(request, job_id):
+
+    try:
+        job = JobService().get_job(job_id)
+        error = None
+
+    except Exception as exc:
+        job = None
+        error = str(exc)
+
+    context = {
+        "job": job,
+        "error": error,
+    }
+
+    return render(
+        request,
+        "jobs/detail.html",
+        context,
+    )
 

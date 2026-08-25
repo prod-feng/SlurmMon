@@ -213,3 +213,34 @@ def resume_node(request, node):
 
     return redirect("nodes:list")
 
+
+@login_required
+def node_detail(request, node_name):
+
+    try:
+
+        node = NodeService().get_node_details(
+            node_name
+        )
+
+        error = None
+
+    except Exception as exc:
+
+        node = {}
+
+        error = str(exc)
+
+    context = {
+        "node": node,
+        "error": error,
+        "node_name": node_name,
+    }
+
+    return render(
+        request,
+        "nodes/detail.html",
+        context,
+    )
+
+

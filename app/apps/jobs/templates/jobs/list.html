@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load jobs_tags %}
 
 {% block title %}
 Jobs - Slurm Manager
@@ -35,7 +35,7 @@ Current cluster workload
 {% endif %}
 
 
-<section class="panel">
+<section class="panel jobs-panel">
 
     <div class="panel-header">
 
@@ -56,9 +56,9 @@ Current cluster workload
     </div>
 
 
-    <div class="table-wrapper">
+    <div class="table-wrapper jobs-table-wrapper">
 
-        <table>
+        <table class="jobs-table">
 
             <thead>
 
@@ -73,13 +73,14 @@ Current cluster workload
                             Job ID
 
                             {% if sort == "id" %}
-                                {% if direction == "asc" %}
-                                    ↑
-                                {% else %}
-                                    ↓
-                                {% endif %}
+                                <span class="sort-indicator">
+                                    {% if direction == "asc" %}
+                                        ↑
+                                    {% else %}
+                                        ↓
+                                    {% endif %}
+                                </span>
                             {% endif %}
-
                         </a>
                     </th>
 
@@ -93,13 +94,14 @@ Current cluster workload
                             User
 
                             {% if sort == "user" %}
-                                {% if direction == "asc" %}
-                                    ↑
-                                {% else %}
-                                    ↓
-                                {% endif %}
+                                <span class="sort-indicator">
+                                    {% if direction == "asc" %}
+                                        ↑
+                                    {% else %}
+                                        ↓
+                                    {% endif %}
+                                </span>
                             {% endif %}
-
                         </a>
                     </th>
 
@@ -113,13 +115,14 @@ Current cluster workload
                             Name
 
                             {% if sort == "name" %}
-                                {% if direction == "asc" %}
-                                    ↑
-                                {% else %}
-                                    ↓
-                                {% endif %}
+                                <span class="sort-indicator">
+                                    {% if direction == "asc" %}
+                                        ↑
+                                    {% else %}
+                                        ↓
+                                    {% endif %}
+                                </span>
                             {% endif %}
-
                         </a>
                     </th>
 
@@ -133,13 +136,14 @@ Current cluster workload
                             State
 
                             {% if sort == "state" %}
-                                {% if direction == "asc" %}
-                                    ↑
-                                {% else %}
-                                    ↓
-                                {% endif %}
+                                <span class="sort-indicator">
+                                    {% if direction == "asc" %}
+                                        ↑
+                                    {% else %}
+                                        ↓
+                                    {% endif %}
+                                </span>
                             {% endif %}
-
                         </a>
                     </th>
 
@@ -153,13 +157,14 @@ Current cluster workload
                             Runtime
 
                             {% if sort == "runtime" %}
-                                {% if direction == "asc" %}
-                                    ↑
-                                {% else %}
-                                    ↓
-                                {% endif %}
+                                <span class="sort-indicator">
+                                    {% if direction == "asc" %}
+                                        ↑
+                                    {% else %}
+                                        ↓
+                                    {% endif %}
+                                </span>
                             {% endif %}
-
                         </a>
                     </th>
 
@@ -173,13 +178,14 @@ Current cluster workload
                             Nodes
 
                             {% if sort == "nodes" %}
-                                {% if direction == "asc" %}
-                                    ↑
-                                {% else %}
-                                    ↓
-                                {% endif %}
+                                <span class="sort-indicator">
+                                    {% if direction == "asc" %}
+                                        ↑
+                                    {% else %}
+                                        ↓
+                                    {% endif %}
+                                </span>
                             {% endif %}
-
                         </a>
                     </th>
 
@@ -193,30 +199,37 @@ Current cluster workload
                             CPUs
 
                             {% if sort == "cpus" %}
-                                {% if direction == "asc" %}
-                                    ↑
-                                {% else %}
-                                    ↓
-                                {% endif %}
+                                <span class="sort-indicator">
+                                    {% if direction == "asc" %}
+                                        ↑
+                                    {% else %}
+                                        ↓
+                                    {% endif %}
+                                </span>
                             {% endif %}
-
                         </a>
                     </th>
-<th>
-    <a
-        href="?sort=gpus&direction={% if sort == 'gpus' and direction == 'asc' %}desc{% else %}asc{% endif %}"
-    >
-        GPUs
 
-        {% if sort == "gpus" %}
-            {% if direction == "asc" %}
-                ↑
-            {% else %}
-                ↓
-            {% endif %}
-        {% endif %}
-    </a>
-</th>		    
+
+                    <!-- GPUs -->
+
+                    <th>
+                        <a
+                            href="?sort=gpus&direction={% if sort == 'gpus' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                        >
+                            GPUs
+
+                            {% if sort == "gpus" %}
+                                <span class="sort-indicator">
+                                    {% if direction == "asc" %}
+                                        ↑
+                                    {% else %}
+                                        ↓
+                                    {% endif %}
+                                </span>
+                            {% endif %}
+                        </a>
+                    </th>
 
                 </tr>
 
@@ -229,10 +242,17 @@ Current cluster workload
 
                 <tr>
 
-                    <td>
-                        <strong>
+                    <td class="job-id-cell">
+
+                        <a
+                            href="{% url 'jobs:detail' job.job_id|job_detail_id %}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="job-id-link"
+                        >
                             {{ job.job_id }}
-                        </strong>
+                        </a>
+
                     </td>
 
 
@@ -241,7 +261,7 @@ Current cluster workload
                     </td>
 
 
-                    <td>
+                    <td class="job-name-cell">
                         {{ job.name }}
                     </td>
 
@@ -271,27 +291,31 @@ Current cluster workload
                     </td>
 
 
-                    <td>
+                    <td class="numeric-cell">
                         {{ job.elapsed }}
                     </td>
 
 
-                    <td>
+                    <td class="numeric-cell">
                         {{ job.nodes }}
                     </td>
 
 
-                    <td>
+                    <td class="numeric-cell">
                         {{ job.cpus|default:"—" }}
                     </td>
 
-<td>
-    {% if job.gpus %}
-        {{ job.gpus }}
-    {% else %}
-        —
-    {% endif %}
-</td>
+
+                    <td class="numeric-cell">
+
+                        {% if job.gpus %}
+                            {{ job.gpus }}
+                        {% else %}
+                            —
+                        {% endif %}
+
+                    </td>
+
                 </tr>
 
 
@@ -300,7 +324,7 @@ Current cluster workload
                 <tr>
 
                     <td
-                        colspan="9"
+                        colspan="8"
                         class="empty"
                     >
                         No jobs currently visible.

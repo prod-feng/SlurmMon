@@ -1,6 +1,8 @@
 from slurm.client import SlurmClient
-from slurm.parsers import parse_jobs
-
+from slurm.parsers import (
+        parse_job_details,
+        parse_jobs,
+)
 
 class JobService:
 
@@ -28,49 +30,21 @@ class JobService:
             self.client.jobs()
         )
 
-        # -------------------------------------------------
-        # Validate sort field.
-        # -------------------------------------------------
-
         sort_field = self.SORT_FIELDS.get(
             sort,
             "job_id",
         )
 
-        # -------------------------------------------------
-        # Validate direction.
-        # -------------------------------------------------
-
         reverse = direction == "desc"
-
-        # -------------------------------------------------
-        # Sorting
-        # -------------------------------------------------
 
         if sort_field == "job_id":
 
             def sort_key(job):
-                """
-                Sort job IDs safely.
-
-                Normal Slurm jobs:
-                    12345
-                    12346
-
-                Job arrays can look like:
-                    12345_1
-                    12345_2
-
-                Always return the same type from this function.
-                """
-
                 value = str(
                     job.job_id or ""
                 ).strip()
 
-                # Separate numeric job IDs from other IDs.
                 if value.isdigit():
-
                     return (
                         0,
                         int(value),
@@ -89,7 +63,6 @@ class JobService:
         ):
 
             def sort_key(job):
-
                 value = getattr(
                     job,
                     sort_field,
@@ -97,7 +70,6 @@ class JobService:
                 )
 
                 try:
-
                     return (
                         0,
                         int(value),
@@ -107,15 +79,14 @@ class JobService:
                     TypeError,
                     ValueError,
                 ):
-
                     return (
                         1,
                         0,
                     )
+
         elif sort_field == "gpus":
 
             def sort_key(job):
-
                 value = str(
                     job.gpus or ""
                 ).strip()
@@ -127,14 +98,7 @@ class JobService:
                         "",
                     )
 
-        # Examples:
-        #
-        # gpu:5
-        # gpu:a100:5
-        # gpu:6000:4
-        #
                 try:
-
                     count = int(
                         value.rsplit(":", 1)[-1]
                     )
@@ -152,10 +116,10 @@ class JobService:
                         0,
                         value.lower(),
                     )
+
         else:
 
             def sort_key(job):
-
                 value = getattr(
                     job,
                     sort_field,
@@ -172,4 +136,14 @@ class JobService:
         )
 
         return jobs
+
+    def get_job(self, job_id):
+        output = self.client.job_details(
+            job_id
+        )
+
+        return parse_job_details(
+            output
+        )
+
 

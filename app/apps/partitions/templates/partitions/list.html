@@ -58,16 +58,18 @@ Configured cluster partitions
 
     <div class="table-wrapper">
 
-        <table>
+        <table class="partitions-table">
 
             <thead>
 
                 <tr>
+
                     <th>Partition</th>
                     <th>State</th>
                     <th>Nodes</th>
                     <th>CPUs</th>
                     <th>Time Limit</th>
+
                 </tr>
 
             </thead>
@@ -81,9 +83,17 @@ Configured cluster partitions
 
                     <td>
                         <strong>
-                            {{ partition.name }}
+        <a
+            href="{% url 'partitions:detail' partition.name %}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="partition-name-link"
+        >
+            {{ partition.name }}
+        </a>				
                         </strong>
                     </td>
+
 
                     <td>
 
@@ -93,13 +103,16 @@ Configured cluster partitions
 
                     </td>
 
+
                     <td>
                         {{ partition.nodes }}
                     </td>
 
+
                     <td>
                         {{ partition.cpus }}
                     </td>
+
 
                     <td>
                         {{ partition.timelimit }}

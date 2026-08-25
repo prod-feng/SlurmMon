@@ -174,12 +174,27 @@ def get_associations(
     output = _run_sacctmgr([
         "show",
         "association",
-        "format=Cluster,Account,User,Partition,Fairshare,DefaultQOS,QOS",
+        "format="
+        "Cluster,"
+        "Account,"
+        "User,"
+        "Partition,"
+        "Fairshare,"
+        "Priority,"
+        "DefaultQOS,"
+        "QOS,"
+        "GrpTRES,"
+        "GrpTRESMins,"
+        "MaxTRES,"
+        "MaxTRESMins,"
+        "MaxJobs,"
+        "MaxSubmitJobs,"
+        "MaxWall",
     ])
 
     associations = []
 
-    for parts in _split_rows(output, 7):
+    for parts in _split_rows(output, 15):
 
         cluster = parts[0].strip()
         account = parts[1].strip()
@@ -203,9 +218,23 @@ def get_associations(
             "account": account,
             "user": user,
             "partition": partition or "—",
+
             "fairshare": parts[4].strip(),
-            "default_qos": parts[5].strip(),
-            "qos": parts[6].strip(),
+            "priority": parts[5].strip(),
+
+            "default_qos": parts[6].strip(),
+            "qos": parts[7].strip(),
+
+            "grp_tres": parts[8].strip(),
+            "grp_tres_mins": parts[9].strip(),
+
+            "max_tres": parts[10].strip(),
+            "max_tres_mins": parts[11].strip(),
+
+            "max_jobs": parts[12].strip(),
+            "max_submit_jobs": parts[13].strip(),
+
+            "max_wall": parts[14].strip(),
         })
 
     return associations
@@ -291,6 +320,8 @@ def get_accounts_page_data(
     Retrieve everything needed by the Accounts page.
     """
 
+    qos = get_qos()
+
     accounts = get_accounts(account_filter)
 
     associations = get_associations(
@@ -315,10 +346,53 @@ def get_accounts_page_data(
         "account_tree": tree,
         "users": users,
         "associations": associations,
+        "qos": qos,
         "summary": {
             "accounts": len(accounts),
             "users": len(users),
             "associations": len(associations),
         },
     }
+
+def get_qos():
+    """
+    Return configured Slurm Quality of Service entries.
+    """
+
+    output = _run_sacctmgr([
+        "show",
+        "qos",
+        "format=Name,Priority,GraceTime,Preempt,PreemptMode,"
+        "Flags,MaxTRES,MaxTRESMins,MaxJobsPU,MaxSubmitJobsPU,"
+        "MaxWall,GrpTRES,GrpTRESMins",
+    ])
+
+    qos_list = []
+
+    for parts in _split_rows(output, 13):
+
+        name = parts[0].strip()
+
+        if not name:
+            continue
+
+        qos_list.append({
+            "name": name,
+            "priority": parts[1].strip(),
+            "grace_time": parts[2].strip(),
+            "preempt": parts[3].strip(),
+            "preempt_mode": parts[4].strip(),
+            "flags": parts[5].strip(),
+            "max_tres": parts[6].strip(),
+            "max_tres_mins": parts[7].strip(),
+            "max_jobs": parts[8].strip(),
+            "max_submit_jobs": parts[9].strip(),
+            "max_wall": parts[10].strip(),
+            "grp_tres": parts[11].strip(),
+            "grp_tres_mins": parts[12].strip(),
+        })
+
+    return qos_list
+
+
 

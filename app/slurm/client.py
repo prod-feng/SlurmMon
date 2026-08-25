@@ -89,6 +89,22 @@ class SlurmClient:
             "node",
             node,
         )
+    def partition_details(self, partition: str) -> str:
+        return self._run(
+            "scontrol",
+            "show",
+            "partition",
+            partition,
+        )
+
+
+    def job_details(self, job_id: str | int) -> str:
+        return self._run(
+            "scontrol",
+            "show",
+            "job",
+            str(job_id),
+        )
 
     def drain_node(self, node: str, reason: str) -> str:
         return self._run(

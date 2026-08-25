@@ -1321,3 +1321,638 @@ td strong {
 }
 
 
+/* =========================================================
+   Jobs table
+   ========================================================= */
+
+.jobs-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.jobs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+
+/* ---------------------------------------------------------
+   Header
+   --------------------------------------------------------- */
+
+.jobs-table thead th {
+    padding: 13px 16px;
+
+    background: #e5e7eb;
+
+    color: #374151;
+
+    border-bottom: 2px solid #d1d5db;
+
+    text-align: left;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.jobs-table thead th a {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: inherit;
+
+    text-decoration: none;
+}
+
+.jobs-table thead th a:hover {
+    color: #2563eb;
+}
+
+.jobs-table .sort-indicator {
+    color: #2563eb;
+    font-weight: 700;
+}
+
+
+/* ---------------------------------------------------------
+   Zebra striping
+   --------------------------------------------------------- */
+
+.jobs-table tbody tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+.jobs-table tbody tr:nth-child(even) td {
+    background-color: #f1f5f9;
+}
+
+
+/* ---------------------------------------------------------
+   Hover
+   --------------------------------------------------------- */
+
+.jobs-table tbody tr:hover td {
+    background-color: #dbeafe;
+}
+
+
+/* ---------------------------------------------------------
+   Cells
+   --------------------------------------------------------- */
+
+.jobs-table tbody td {
+    padding: 12px 16px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    color: #1f2937;
+
+    vertical-align: middle;
+}
+
+.jobs-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* ---------------------------------------------------------
+   Job ID
+   --------------------------------------------------------- */
+
+.jobs-table .job-id-cell {
+    white-space: nowrap;
+}
+
+.jobs-table .job-id-link {
+    color: #2563eb;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.jobs-table .job-id-link:hover {
+    color: #1d4ed8;
+
+    text-decoration: underline;
+}
+
+
+/* ---------------------------------------------------------
+   Job name
+   --------------------------------------------------------- */
+
+.jobs-table .job-name-cell {
+    font-weight: 500;
+}
+
+
+/* ---------------------------------------------------------
+   Numeric / resource columns
+   --------------------------------------------------------- */
+
+.jobs-table .numeric-cell {
+    white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   Empty state
+   --------------------------------------------------------- */
+
+.jobs-table .empty {
+    padding: 32px 16px;
+
+    background: #ffffff;
+
+    color: #6b7280;
+
+    text-align: center;
+}
+
+
+/* ---------------------------------------------------------
+   Job status badges
+   --------------------------------------------------------- */
+
+.jobs-table .badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 4px 9px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+}
+
+.jobs-table .badge-running {
+    background: #dcfce7;
+
+    color: #166534;
+}
+
+.jobs-table .badge-pending {
+    background: #fef3c7;
+
+    color: #92400e;
+}
+
+.jobs-table .badge-other {
+    background: #e5e7eb;
+
+    color: #374151;
+}
+
+
+/* =========================================================
+   Nodes table
+   ========================================================= */
+
+.nodes-table tbody tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+.nodes-table tbody tr:nth-child(even) td {
+    background-color: #f1f5f9;
+}
+
+.nodes-table tbody tr:hover td {
+    background-color: #dbeafe;
+}
+
+
+/* =========================================================
+   Partitions table
+   ========================================================= */
+
+.partitions-table tbody tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+.partitions-table tbody tr:nth-child(even) td {
+    background-color: #f1f5f9;
+}
+
+.partitions-table tbody tr:hover td {
+    background-color: #dbeafe;
+}
+
+/* =========================================================
+   Node links
+   ========================================================= */
+
+.nodes-table .node-name-link {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.nodes-table .node-name-link:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+/* =========================================================
+   Node detail table
+   ========================================================= */
+
+.node-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.node-detail-table tbody tr:nth-child(odd) th,
+.node-detail-table tbody tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+.node-detail-table tbody tr:nth-child(even) th,
+.node-detail-table tbody tr:nth-child(even) td {
+    background-color: #f1f5f9;
+}
+
+.node-detail-table tbody tr:hover th,
+.node-detail-table tbody tr:hover td {
+    background-color: #dbeafe;
+}
+
+.node-detail-table th {
+    width: 240px;
+
+    padding: 12px 16px;
+
+    color: #475569;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-align: left;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.node-detail-table td {
+    padding: 12px 16px;
+
+    color: #1f2937;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    word-break: break-word;
+}
+
+.node-detail-table tbody tr:last-child th,
+.node-detail-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   Partition detail table
+   ========================================================= */
+
+.partition-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.partition-detail-table tbody tr:nth-child(odd) th,
+.partition-detail-table tbody tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+.partition-detail-table tbody tr:nth-child(even) th,
+.partition-detail-table tbody tr:nth-child(even) td {
+    background-color: #f1f5f9;
+}
+
+.partition-detail-table tbody tr:hover th,
+.partition-detail-table tbody tr:hover td {
+    background-color: #dbeafe;
+}
+
+.partition-detail-table th {
+    width: 240px;
+
+    padding: 12px 16px;
+
+    color: #475569;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-align: left;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.partition-detail-table td {
+    padding: 12px 16px;
+
+    color: #1f2937;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    word-break: break-word;
+}
+
+.partition-detail-table tbody tr:last-child th,
+.partition-detail-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   Partition links
+   ========================================================= */
+
+.partitions-table .partition-name-link {
+    color: #2563eb;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.partitions-table .partition-name-link:hover {
+    color: #1d4ed8;
+
+    text-decoration: underline;
+}
+
+/* =========================================================
+   Column Selector
+   ========================================================= */
+
+.tab-header {
+    position: relative;
+}
+
+
+.column-selector {
+    position: relative;
+
+    flex: 0 0 auto;
+}
+
+
+.column-selector-button {
+    min-width: 100px;
+}
+
+
+.column-selector-menu {
+    position: absolute;
+
+    z-index: 1000;
+
+    top: calc(100% + 8px);
+    right: 0;
+
+    min-width: 220px;
+
+    padding: 8px;
+
+    background: #ffffff;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 20px rgba(15, 23, 42, 0.12);
+}
+
+
+.column-selector-menu label {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px 10px;
+
+    border-radius: 6px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+
+.column-selector-menu label:hover {
+    background: #f1f5f9;
+}
+
+
+.column-selector-menu input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+
+    accent-color: #2563eb;
+
+    cursor: pointer;
+}
+
+
+.column-selector-divider {
+    height: 1px;
+
+    margin: 7px 4px;
+
+    background: #e2e8f0;
+}
+
+
+.column-selector-reset {
+    width: 100%;
+
+    padding: 8px 10px;
+
+    border: 0;
+
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: #2563eb;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+.column-selector-reset:hover {
+    background: #eff6ff;
+}
+
+
+/* =========================================================
+   Accounts tables - Zebra striping
+   ========================================================= */
+/*
+.association-table tbody tr:nth-child(odd) td,
+.tab-panel table tbody tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+.association-table tbody tr:nth-child(even) td,
+.tab-panel table tbody tr:nth-child(even) td {
+    background-color: #f3f6fa;
+}
+*/
+
+/* Hover */
+/*
+.association-table tbody tr:hover td,
+.tab-panel table tbody tr:hover td {
+    background-color: #e8f1fb;
+}
+*/
+/* =========================================================
+   Accounts tables - Zebra striping
+   ========================================================= */
+
+.tab-panel table tbody tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+.tab-panel table tbody tr:nth-child(even) td {
+    background-color: #f3f6fa;
+}
+
+
+/* Hover */
+
+.tab-panel table tbody tr:hover td {
+    background-color: #e8f1fb;
+}
+
+/* =========================================================
+   Account Tree
+   ========================================================= */
+
+.account-tree-node > .account-tree-row {
+    background-color: #ffffff;
+}
+
+.account-tree-node:nth-child(even) > .account-tree-row {
+    background-color: #f3f6fa;
+}
+
+
+/* Hover */
+
+.account-tree-node > .account-tree-row:hover {
+    background-color: #e8f1fb;
+}
+
+/* =====================================================
+   ACCOUNT TREE ZEBRA STRIPING
+   Each top-level account and all of its descendants
+   share the same background color.
+   ===================================================== */
+
+.account-tree > .account-tree-node:nth-child(odd) {
+    background-color: #f8fafc;
+}
+
+.account-tree > .account-tree-node:nth-child(even) {
+    background-color: #ffffff;
+}
+
+
+/* Keep the same color through the entire hierarchy */
+
+.account-tree > .account-tree-node:nth-child(odd)
+.account-tree-node {
+    background-color: transparent;
+}
+
+.account-tree > .account-tree-node:nth-child(even)
+.account-tree-node {
+    background-color: transparent;
+}
+
+
+/* Make the entire group visually continuous */
+
+.account-tree > .account-tree-node {
+    border-radius: 6px;
+    margin-bottom: 4px;
+}
+
+.account-tree > .account-tree-node .account-tree-row {
+    background-color: transparent;
+}
+
+.account-tree > .account-tree-node .account-tree-users-list {
+    background-color: transparent;
+}
+
+.account-tree > .account-tree-node .account-tree-children {
+    background-color: transparent;
+}
+
+/* =====================================================
+   QOS Tab
+   ===================================================== */
+.qos-table tbody tr:nth-child(odd) {
+    background-color: #f8fafc;
+}
+
+.qos-table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+
+/* =====================================================
+   CLICKABLE METRIC CARDS
+   ===================================================== */
+
+.metric-card-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.metric-card-link:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+.metric-card-link:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+

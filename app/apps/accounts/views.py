@@ -48,6 +48,7 @@ def account_list(request):
             "account_tree": [],
             "users": [],
             "associations": [],
+            "qos": [],
             "summary": {
                 "accounts": 0,
                 "users": 0,

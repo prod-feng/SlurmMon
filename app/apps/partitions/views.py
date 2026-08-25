@@ -22,3 +22,33 @@ def partition_list(request):
         },
     )
 
+@login_required
+def partition_detail(request, partition_name):
+
+    try:
+
+        partition = PartitionService().get_partition_details(
+            partition_name
+        )
+
+        error = None
+
+    except Exception as exc:
+
+        partition = {}
+
+        error = str(exc)
+
+    context = {
+        "partition": partition,
+        "error": error,
+        "partition_name": partition_name,
+    }
+
+    return render(
+        request,
+        "partitions/detail.html",
+        context,
+    )
+
+

@@ -1,6 +1,8 @@
 from slurm.client import SlurmClient
-from slurm.parsers import parse_nodes
-
+from slurm.parsers import (
+        parse_node_details,
+        parse_nodes,
+)
 
 class NodeService:
     def __init__(self, client=None):
@@ -18,4 +20,11 @@ class NodeService:
 
     def resume(self, node: str):
         return self.client.resume_node(node)
+
+    def get_node_details(self, node_name):
+        output = self.client.node_details(
+             node_name
+         )
+
+        return parse_node_details(output)
 

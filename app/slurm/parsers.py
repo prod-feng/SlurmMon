@@ -116,3 +116,77 @@ def parse_jobs(output: str) -> list[JobInfo]:
 
     return jobs
 
+def parse_job_details(output: str) -> dict:
+    """
+    Parse `scontrol show job <job_id>` output.
+
+    Slurm returns key=value pairs, potentially split across
+    multiple lines.
+    """
+
+    details = {}
+
+    for token in output.split():
+        if "=" not in token:
+            continue
+
+        key, value = token.split(
+            "=",
+            1,
+        )
+
+        details[key] = value
+
+    return details
+
+
+
+def parse_node_details(output: str) -> dict:
+    """
+    Parse `scontrol show node <node_name>` output.
+
+    Slurm returns key=value pairs, potentially split across
+    multiple lines.
+    """
+
+    details = {}
+
+    for token in output.split():
+        if "=" not in token:
+            continue
+
+        key, value = token.split(
+            "=",
+            1,
+        )
+
+        details[key] = value
+
+    return details
+
+
+
+def parse_partition_details(output: str) -> dict:
+    """
+    Parse `scontrol show partition <partition>` output.
+
+    Slurm returns key=value pairs, potentially split across
+    multiple lines.
+    """
+
+    details = {}
+
+    for token in output.split():
+        if "=" not in token:
+            continue
+
+        key, value = token.split(
+            "=",
+            1,
+        )
+
+        details[key] = value
+
+    return details
+
+

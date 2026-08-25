@@ -37,9 +37,17 @@ Accounts, users, associations, and account hierarchy
      SUMMARY
      ===================================================== -->
 
+<!-- =====================================================
+     SUMMARY
+     ===================================================== -->
+
 <section class="metrics-grid">
 
-    <div class="metric-card">
+    <a
+        href="#tab-accounts"
+        class="metric-card metric-card-link"
+        data-open-tab="tab-accounts"
+    >
 
         <div class="metric-header">
             <span>Accounts</span>
@@ -54,10 +62,14 @@ Accounts, users, associations, and account hierarchy
             Slurm accounts
         </div>
 
-    </div>
+    </a>
 
 
-    <div class="metric-card">
+    <a
+        href="#tab-users"
+        class="metric-card metric-card-link"
+        data-open-tab="tab-users"
+    >
 
         <div class="metric-header">
             <span>Users</span>
@@ -72,10 +84,14 @@ Accounts, users, associations, and account hierarchy
             Accounting users
         </div>
 
-    </div>
+    </a>
 
 
-    <div class="metric-card">
+    <a
+        href="#tab-associations"
+        class="metric-card metric-card-link"
+        data-open-tab="tab-associations"
+    >
 
         <div class="metric-header">
             <span>Associations</span>
@@ -90,9 +106,32 @@ Accounts, users, associations, and account hierarchy
             Account / user associations
         </div>
 
-    </div>
+    </a>
+
+
+    <a
+        href="#tab-qos"
+        class="metric-card metric-card-link"
+        data-open-tab="tab-qos"
+    >
+
+        <div class="metric-header">
+            <span>QoS</span>
+            <span class="metric-icon">⚙</span>
+        </div>
+
+        <div class="metric-value">
+            {{ qos|length }}
+        </div>
+
+        <div class="metric-label">
+            Quality of Service policies
+        </div>
+
+    </a>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -217,7 +256,11 @@ Accounts, users, associations, and account hierarchy
 
 <section class="panel">
 
-    <div class="tabs" role="tablist" aria-label="Account information">
+    <div
+        class="tabs"
+        role="tablist"
+        aria-label="Account information"
+    >
 
         <button
             type="button"
@@ -228,10 +271,13 @@ Accounts, users, associations, and account hierarchy
             data-tab="tab-accounts"
         >
             Accounts
+
             <span class="count-badge">
                 {{ summary.accounts }}
             </span>
+
         </button>
+
 
         <button
             type="button"
@@ -242,10 +288,13 @@ Accounts, users, associations, and account hierarchy
             data-tab="tab-associations"
         >
             Associations
+
             <span class="count-badge">
                 {{ summary.associations }}
             </span>
+
         </button>
+
 
         <button
             type="button"
@@ -256,10 +305,27 @@ Accounts, users, associations, and account hierarchy
             data-tab="tab-users"
         >
             Users
+
             <span class="count-badge">
                 {{ summary.users }}
             </span>
+
         </button>
+
+<button
+    type="button"
+    class="tab-button"
+    role="tab"
+    aria-selected="false"
+    aria-controls="tab-qos"
+    data-tab="tab-qos"
+>
+    QoS
+    <span class="count-badge">
+        {{ qos|length }}
+    </span>
+</button>
+	
 
     </div>
 
@@ -277,11 +343,15 @@ Accounts, users, associations, and account hierarchy
         <div class="tab-header">
 
             <div>
-                <h2>Account Hierarchy</h2>
+
+                <h2>
+                    Account Hierarchy
+                </h2>
 
                 <p>
                     Parent and child account relationships
                 </p>
+
             </div>
 
         </div>
@@ -320,30 +390,303 @@ Accounts, users, associations, and account hierarchy
         <div class="tab-header">
 
             <div>
-                <h2>Associations</h2>
+
+                <h2>
+                    Associations
+                </h2>
 
                 <p>
                     Cluster / account / user / partition relationships
                 </p>
+
+            </div>
+
+
+            <!-- =========================================
+                 COLUMN SELECTOR
+                 ========================================= -->
+
+            <div class="column-selector">
+
+                <button
+                    type="button"
+                    class="button button-secondary column-selector-button"
+                    aria-expanded="false"
+                >
+                    Columns ▾
+                </button>
+
+
+                <div
+                    class="column-selector-menu"
+                    hidden
+                >
+
+                    <!-- Account -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="account"
+                            checked
+                        >
+                        Account
+                    </label>
+
+
+                    <!-- User -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="user"
+                            checked
+                        >
+                        User
+                    </label>
+
+
+                    <!-- Fairshare -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="fairshare"
+                            checked
+                        >
+                        Fairshare
+                    </label>
+
+
+                    <!-- Priority -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="priority"
+                            checked
+                        >
+                        Priority
+                    </label>
+
+
+                    <!-- QoS -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="qos"
+                            checked
+                        >
+                        QoS
+                    </label>
+
+
+                    <!-- Max TRES -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="max-tres"
+                        >
+                        Max TRES
+                    </label>
+
+
+                    <!-- Max Jobs -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="max-jobs"
+                        >
+                        Max Jobs
+                    </label>
+
+
+                    <!-- Max Submit Jobs -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="max-submit-jobs"
+                        >
+                        Max Submit Jobs
+                    </label>
+
+
+                    <!-- Max Wall -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="max-wall"
+                        >
+                        Max Wall
+                    </label>
+
+
+                    <!-- Group TRES -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="grp-tres"
+                        >
+                        Group TRES
+                    </label>
+
+
+                    <!-- Max TRES Minutes -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="max-tres-mins"
+                        >
+                        Max TRES-minutes
+                    </label>
+
+
+                    <!-- Group TRES Minutes -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="grp-tres-mins"
+                        >
+                        Group TRES-minutes
+                    </label>
+
+
+                    <!-- Default QoS -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="default-qos"
+                            checked
+                        >
+                        Default QoS
+                    </label>
+
+
+                    <!-- Partition -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="partition"
+                            checked
+                        >
+                        Partition
+                    </label>
+
+
+                    <!-- Cluster -->
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="cluster"
+                            checked
+                        >
+                        Cluster
+                    </label>
+
+
+                    <div class="column-selector-divider"></div>
+
+
+                    <button
+                        type="button"
+                        class="column-selector-reset"
+                    >
+                        Reset columns
+                    </button>
+
+                </div>
+
             </div>
 
         </div>
 
 
+        <!-- =============================================
+             ASSOCIATION TABLE
+             ============================================= -->
+
         <div class="table-wrapper">
 
-            <table>
+            <table
+                class="association-table"
+                data-column-storage="association-columns-v2"
+            >
 
                 <thead>
 
                     <tr>
-                        <th>Cluster</th>
-                        <th>Account</th>
-                        <th>User</th>
-                        <th>Partition</th>
-                        <th>Fairshare</th>
-                        <th>Default QoS</th>
-                        <th>QoS</th>
+
+                        <th data-column="account">
+                            Account
+                        </th>
+
+                        <th data-column="user">
+                            User
+                        </th>
+
+                        <th data-column="fairshare">
+                            Fairshare
+                        </th>
+
+                        <th data-column="priority">
+                            Priority
+                        </th>
+
+                        <th data-column="qos">
+                            QoS
+                        </th>
+
+                        <th data-column="max-tres">
+                            Max TRES
+                        </th>
+
+                        <th data-column="max-jobs">
+                            Max Jobs
+                        </th>
+
+                        <th data-column="max-submit-jobs">
+                            Max Submit Jobs
+                        </th>
+
+                        <th data-column="max-wall">
+                            Max Wall
+                        </th>
+
+                        <th data-column="grp-tres">
+                            Group TRES
+                        </th>
+
+                        <th data-column="max-tres-mins">
+                            Max TRES-minutes
+                        </th>
+
+                        <th data-column="grp-tres-mins">
+                            Group TRES-minutes
+                        </th>
+
+                        <th data-column="default-qos">
+                            Default QoS
+                        </th>
+
+                        <th data-column="partition">
+                            Partition
+                        </th>
+
+                        <th data-column="cluster">
+                            Cluster
+                        </th>
+
                     </tr>
 
                 </thead>
@@ -355,44 +698,93 @@ Accounts, users, associations, and account hierarchy
 
                     <tr>
 
-                        <td>
-                            {{ association.cluster }}
-                        </td>
+                        <td data-column="account">
 
-                        <td>
                             <strong>
                                 {{ association.account }}
                             </strong>
+
                         </td>
 
-                        <td>
+
+                        <td data-column="user">
                             {{ association.user|default:"—" }}
                         </td>
 
-                        <td>
-                            {{ association.partition }}
-                        </td>
 
-                        <td>
+                        <td data-column="fairshare">
                             {{ association.fairshare|default:"—" }}
                         </td>
 
-                        <td>
-                            {{ association.default_qos|default:"—" }}
+
+                        <td data-column="priority">
+                            {{ association.priority|default:"—" }}
                         </td>
 
-                        <td>
+
+                        <td data-column="qos">
                             {{ association.qos|default:"—" }}
                         </td>
 
+
+                        <td data-column="max-tres">
+                            {{ association.max_tres|default:"—" }}
+                        </td>
+
+
+                        <td data-column="max-jobs">
+                            {{ association.max_jobs|default:"—" }}
+                        </td>
+
+
+                        <td data-column="max-submit-jobs">
+                            {{ association.max_submit_jobs|default:"—" }}
+                        </td>
+
+
+                        <td data-column="max-wall">
+                            {{ association.max_wall|default:"—" }}
+                        </td>
+
+
+                        <td data-column="grp-tres">
+                            {{ association.grp_tres|default:"—" }}
+                        </td>
+
+
+                        <td data-column="max-tres-mins">
+                            {{ association.max_tres_mins|default:"—" }}
+                        </td>
+
+
+                        <td data-column="grp-tres-mins">
+                            {{ association.grp_tres_mins|default:"—" }}
+                        </td>
+
+
+                        <td data-column="default-qos">
+                            {{ association.default_qos|default:"—" }}
+                        </td>
+
+
+                        <td data-column="partition">
+                            {{ association.partition }}
+                        </td>
+
+
+                        <td data-column="cluster">
+                            {{ association.cluster }}
+                        </td>
+
                     </tr>
+
 
                 {% empty %}
 
                     <tr>
 
                         <td
-                            colspan="7"
+                            colspan="15"
                             class="empty"
                         >
                             No associations found.
@@ -425,11 +817,15 @@ Accounts, users, associations, and account hierarchy
         <div class="tab-header">
 
             <div>
-                <h2>Users</h2>
+
+                <h2>
+                    Users
+                </h2>
 
                 <p>
                     Slurm accounting users
                 </p>
+
             </div>
 
         </div>
@@ -442,10 +838,23 @@ Accounts, users, associations, and account hierarchy
                 <thead>
 
                     <tr>
-                        <th>User</th>
-                        <th>Default Account</th>
-                        <th>Default WCKey</th>
-                        <th>Admin Level</th>
+
+                        <th>
+                            User
+                        </th>
+
+                        <th>
+                            Default Account
+                        </th>
+
+                        <th>
+                            Default WCKey
+                        </th>
+
+                        <th>
+                            Admin Level
+                        </th>
+
                     </tr>
 
                 </thead>
@@ -458,24 +867,30 @@ Accounts, users, associations, and account hierarchy
                     <tr>
 
                         <td>
+
                             <strong>
                                 {{ user.name }}
                             </strong>
+
                         </td>
+
 
                         <td>
                             {{ user.default_account|default:"—" }}
                         </td>
 
+
                         <td>
                             {{ user.default_wckey|default:"—" }}
                         </td>
+
 
                         <td>
                             {{ user.admin_level|default:"None" }}
                         </td>
 
                     </tr>
+
 
                 {% empty %}
 
@@ -500,46 +915,143 @@ Accounts, users, associations, and account hierarchy
 
     </div>
 
+<!-- =================================================
+     QOS TAB
+     ================================================= -->
+
+<div
+    id="tab-qos"
+    class="tab-panel"
+    role="tabpanel"
+    hidden
+>
+
+    <div class="tab-header">
+
+        <div>
+
+            <h2>Quality of Service</h2>
+
+            <p>
+                Configured Slurm QoS policies
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table class="qos-table">
+
+            <thead>
+
+                <tr>
+                    <th>Name</th>
+                    <th>Priority</th>
+                    <th>Grace Time</th>
+                    <th>Preempt</th>
+                    <th>Preempt Mode</th>
+                    <th>Flags</th>
+                    <th>Max TRES</th>
+                    <th>Max TRES Minutes</th>
+                    <th>Max Jobs</th>
+                    <th>Max Submit Jobs</th>
+                    <th>Max Wall</th>
+                    <th>Group TRES</th>
+                    <th>Group TRES Minutes</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for item in qos %}
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            {{ item.name }}
+                        </strong>
+                    </td>
+
+                    <td>
+                        {{ item.priority|default:"—" }}
+                    </td>
+
+                    <td>
+                        {{ item.grace_time|default:"—" }}
+                    </td>
+
+                    <td>
+                        {{ item.preempt|default:"—" }}
+                    </td>
+
+                    <td>
+                        {{ item.preempt_mode|default:"—" }}
+                    </td>
+
+                    <td>
+                        {{ item.flags|default:"—" }}
+                    </td>
+
+                    <td>
+                        {{ item.max_tres|default:"—" }}
+                    </td>
+
+                    <td>
+                        {{ item.max_tres_mins|default:"—" }}
+                    </td>
+
+                    <td>
+                        {{ item.max_jobs|default:"—" }}
+                    </td>
+
+                    <td>
+                        {{ item.max_submit_jobs|default:"—" }}
+                    </td>
+
+                    <td>
+                        {{ item.max_wall|default:"—" }}
+                    </td>
+
+                    <td>
+                        {{ item.grp_tres|default:"—" }}
+                    </td>
+
+                    <td>
+                        {{ item.grp_tres_mins|default:"—" }}
+                    </td>
+
+                </tr>
+
+            {% empty %}
+
+                <tr>
+
+                    <td
+                        colspan="13"
+                        class="empty"
+                    >
+                        No QoS entries found.
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+    
 </section>
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const buttons = document.querySelectorAll(".tab-button");
-    const panels = document.querySelectorAll(".tab-panel");
-
-    buttons.forEach(function (button) {
-
-        button.addEventListener("click", function () {
-
-            const targetId = button.dataset.tab;
-
-            buttons.forEach(function (item) {
-                item.classList.remove("active");
-                item.setAttribute("aria-selected", "false");
-            });
-
-            panels.forEach(function (panel) {
-                panel.classList.remove("active");
-                panel.hidden = true;
-            });
-
-            button.classList.add("active");
-            button.setAttribute("aria-selected", "true");
-
-            const target = document.getElementById(targetId);
-
-            target.hidden = false;
-            target.classList.add("active");
-
-        });
-
-    });
-
-});
-</script>
-
 
 {% endblock %}
 

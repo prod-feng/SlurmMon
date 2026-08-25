@@ -1,5 +1,8 @@
 from slurm.client import SlurmClient
-from slurm.parsers import parse_partitions
+from slurm.parsers import (
+        parse_partition_details,
+        parse_partitions,
+)        
 
 
 class PartitionService:
@@ -10,4 +13,11 @@ class PartitionService:
         return parse_partitions(
             self.client.partitions()
         )
+
+    def get_partition_details(self, partition_name):
+        output = self.client.partition_details(
+            partition_name
+        )
+
+        return parse_partition_details(output)
 

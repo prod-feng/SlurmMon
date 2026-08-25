@@ -6,6 +6,7 @@ app_name = "nodes"
 
 urlpatterns = [
     path("", views.node_list, name="list"),
+    path("<str:node_name>/", views.node_detail, name="detail"),
     path("<str:node>/drain/", views.drain_node, name="drain"),
     path("<str:node>/resume/", views.resume_node, name="resume"),
 ]

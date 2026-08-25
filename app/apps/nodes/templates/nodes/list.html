@@ -58,17 +58,19 @@ Current status of compute nodes
 
     <div class="table-wrapper">
 
-        <table>
+        <table class="nodes-table">
 
             <thead>
 
                 <tr>
+
                     <th>Node</th>
                     <th>State</th>
                     <th>CPUs</th>
-		    <th>GPUs</th>
+                    <th>GPUs</th>
                     <th>Memory</th>
                     <th>Partitions</th>
+
                 </tr>
 
             </thead>
@@ -82,7 +84,14 @@ Current status of compute nodes
 
                     <td>
                         <strong>
-                            {{ node.name }}
+        <a
+            href="{% url 'nodes:detail' node.name %}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="node-name-link"
+        >
+            {{ node.name }}
+        </a>				
                         </strong>
                     </td>
 
@@ -122,29 +131,35 @@ Current status of compute nodes
                         {{ node.cpus }}
                     </td>
 
-<td>
-    {% if node.gpus.total > 0 %}
 
-        <strong>
-            {{ node.gpus.allocated }}/{{ node.gpus.total }}
-        </strong>
+                    <td>
 
-        {% if node.gpus.type %}
-            <span>
-                {{ node.gpus.type }}
-            </span>
-        {% endif %}
+                        {% if node.gpus.total > 0 %}
 
-        <small>
-            {{ node.gpus.available }} available
-        </small>
+                            <strong>
+                                {{ node.gpus.allocated }}/{{ node.gpus.total }}
+                            </strong>
 
-    {% else %}
+                            {% if node.gpus.type %}
 
-        <span>—</span>
+                                <span>
+                                    {{ node.gpus.type }}
+                                </span>
 
-    {% endif %}
-</td>		    
+                            {% endif %}
+
+                            <small>
+                                {{ node.gpus.available }} available
+                            </small>
+
+                        {% else %}
+
+                            <span>—</span>
+
+                        {% endif %}
+
+                    </td>
+
 
                     <td>
                         {{ node.memory_mb }} MB
@@ -163,7 +178,7 @@ Current status of compute nodes
                 <tr>
 
                     <td
-                        colspan="5"
+                        colspan="6"
                         class="empty"
                     >
                         No nodes found.
