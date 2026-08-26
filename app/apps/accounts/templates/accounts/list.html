@@ -846,6 +846,9 @@ Accounts, users, associations, and account hierarchy
                         <th>
                             Default Account
                         </th>
+			<th>
+			    Accounts
+			 </th>   
 
                         <th>
                             Default WCKey
@@ -878,6 +881,13 @@ Accounts, users, associations, and account hierarchy
                         <td>
                             {{ user.default_account|default:"—" }}
                         </td>
+			<td>
+			    {% if user.accounts %}
+			            {{ user.accounts|join:", " }}
+        		    {% else %}
+         			    —
+        		    {% endif %}
+			</td>
 
 
                         <td>
@@ -897,7 +907,7 @@ Accounts, users, associations, and account hierarchy
                     <tr>
 
                         <td
-                            colspan="4"
+                            colspan="5"
                             class="empty"
                         >
                             No users found.

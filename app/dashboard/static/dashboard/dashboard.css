@@ -814,7 +814,6 @@ td strong {
 
     background: #ffffff;
 
-    overflow-x: auto;
 }
 
 .tab-button {
@@ -1181,19 +1180,19 @@ td strong {
  */
 
 .account-tree-row.tree-level-0-odd {
-    background-color: #dbeafe !important;
+    background-color: #e2eefd !important;
 }
 
 .account-tree-row.tree-level-0-even {
-    background-color: #bfdbfe !important;
+    background-color: #d6e6fc !important;
 }
 
 .account-tree-row.tree-level-1-odd {
-    background-color: #e8f3ff !important;
+    background-color: #edf5fe !important;
 }
 
 .account-tree-row.tree-level-1-even {
-    background-color: #d4e9ff !important;
+    background-color: #e2eefd !important;
 }
 
 

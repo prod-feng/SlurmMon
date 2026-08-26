@@ -339,7 +339,13 @@ def get_account_tree(account_filter="*"):
             or parent_name not in accounts
         ):
             roots.append(account)
-
+    # Put "default" at the end of the top-level accounts.
+    roots.sort(
+        key=lambda account: (
+            account["name"].lower() == "default",
+            account["name"].lower(),
+        )
+    )
     return roots
 
 
@@ -511,7 +517,7 @@ def get_summary():
     }
 
 
-def get_accounts_page_data(
+def get_accounts_page_data_old(
     account_filter="*",
     user_filter="*",
     cluster_filter="*",
@@ -544,6 +550,78 @@ def get_accounts_page_data(
     assign_tree_classes(account_tree)
 
     print("\n=== ACCOUNT TREE COLORS ===")
+
+def get_accounts_page_data(
+    account_filter="*",
+    user_filter="*",
+    cluster_filter="*",
+    partition_filter="*",
+):
+    """
+    Retrieve everything needed by the Accounts page.
+    """
+
+    # --------------------------------------------------
+    # One association query gives us:
+    #
+    #   accounts
+    #   account hierarchy
+    #   account -> users
+    #   associations
+    # --------------------------------------------------
+
+    data = get_slurm_account_data(
+        account_filter=account_filter,
+        user_filter=user_filter,
+        cluster_filter=cluster_filter,
+        partition_filter=partition_filter,
+    )
+
+    # --------------------------------------------------
+    # User-level information.
+    #
+    # Needed because DefaultAccount cannot be inferred
+    # from associations.
+    # --------------------------------------------------
+
+    users = get_users(user_filter)
+
+    user_accounts = data["user_accounts"]
+
+    for user in users:
+
+        user["accounts"] = sorted(
+            user_accounts.get(user["name"], set()),
+            key=str.lower,
+        )
+
+    # --------------------------------------------------
+    # QoS is independent.
+    # --------------------------------------------------
+
+    qos = get_qos()
+
+    # --------------------------------------------------
+    # Tree presentation classes.
+    # --------------------------------------------------
+
+    assign_tree_classes(
+        data["account_tree"]
+    )
+
+    return {
+        "accounts": data["accounts"],
+        "account_tree": data["account_tree"],
+        "users": users,
+        "associations": data["associations"],
+        "qos": qos,
+
+        "summary": {
+            "accounts": len(data["accounts"]),
+            "users": len(users),
+            "associations": len(data["associations"]),
+        },
+    }
 
 
     def debug_tree(nodes, indent=0):
@@ -808,4 +886,265 @@ def assign_tree_styles(accounts, level=0):
                 children,
                 level=level + 1,
             )
+
+def get_slurm_account_data(
+    account_filter="*",
+    user_filter="*",
+    cluster_filter="*",
+    partition_filter="*",
+):
+    """
+    Retrieve accounts, account hierarchy, users attached to accounts,
+    and associations from one sacctmgr query.
+
+    The association output contains ParentName, so there is no need
+    for a separate `sacctmgr ... associations tree` call.
+    """
+
+    output = _run_sacctmgr([
+        "show",
+        "associations",
+        "format="
+        "Cluster,"
+        "Account,"
+        "User,"
+        "Partition,"
+        "ParentName,"
+        "Fairshare,"
+        "Priority,"
+        "DefaultQOS,"
+        "QOS,"
+        "GrpTRES,"
+        "GrpTRESMins,"
+        "MaxTRES,"
+        "MaxTRESMins,"
+        "MaxJobs,"
+        "MaxSubmitJobs,"
+        "MaxWall",
+    ])
+
+    accounts = {}
+    associations = []
+    user_accounts = {}
+
+    # ------------------------------------------------------
+    # Parse association output.
+    # ------------------------------------------------------
+
+    for parts in _split_rows(output, 16):
+
+        cluster = parts[0].strip()
+        account_name = parts[1].strip()
+        user_name = parts[2].strip()
+        partition = parts[3].strip()
+        parent_name = parts[4].strip()
+
+        if not account_name:
+            continue
+
+        # --------------------------------------------------
+        # Create account once.
+        #
+        # An account can occur many times because it may
+        # have many users / partitions / clusters.
+        # --------------------------------------------------
+
+        account = accounts.get(account_name)
+
+        if account is None:
+
+            account = {
+                "name": account_name,
+                "parent": parent_name,
+                "children": [],
+                "users": [],
+            }
+
+            accounts[account_name] = account
+
+        elif parent_name:
+
+            # The account may have appeared previously
+            # through another association row.
+            account["parent"] = parent_name
+
+        # --------------------------------------------------
+        # Attach user to account.
+        # --------------------------------------------------
+
+        if user_name:
+
+            user_accounts.setdefault( user_name,set(),).add(account_name)
+
+            if user_name not in account["users"]:
+                account["users"].append(user_name)
+
+        # --------------------------------------------------
+        # Association filters.
+        #
+        # We apply these to the association list, NOT while
+        # constructing accounts. This is important because
+        # ancestors must remain available for the tree.
+        # --------------------------------------------------
+
+        if not _matches(account_name, account_filter):
+            continue
+
+        if not _matches(user_name, user_filter):
+            continue
+
+        if not _matches(cluster, cluster_filter):
+            continue
+
+        if not _matches(partition, partition_filter):
+            continue
+
+        # --------------------------------------------------
+        # Create association.
+        # --------------------------------------------------
+
+        associations.append({
+            "cluster": cluster,
+            "account": account_name,
+            "user": user_name,
+            "partition": partition or "—",
+
+            "fairshare": parts[5].strip(),
+            "priority": parts[6].strip(),
+
+            "default_qos": parts[7].strip(),
+            "qos": parts[8].strip(),
+
+            "grp_tres": parts[9].strip(),
+            "grp_tres_mins": parts[10].strip(),
+
+            "max_tres": parts[11].strip(),
+            "max_tres_mins": parts[12].strip(),
+
+            "max_jobs": parts[13].strip(),
+            "max_submit_jobs": parts[14].strip(),
+
+            "max_wall": parts[15].strip(),
+        })
+
+    # ------------------------------------------------------
+    # Remove Slurm's structural root.
+    # ------------------------------------------------------
+
+    accounts.pop("root", None)
+
+    # ------------------------------------------------------
+    # Build complete account hierarchy.
+    # ------------------------------------------------------
+
+    for account in accounts.values():
+        account["children"] = []
+
+    for account in accounts.values():
+
+        parent_name = account["parent"]
+
+        if (
+            not parent_name
+            or parent_name.lower() == "root"
+        ):
+            continue
+
+        parent = accounts.get(parent_name)
+
+        if parent is not None:
+            parent["children"].append(account)
+
+    # ------------------------------------------------------
+    # Account filtering.
+    #
+    # Matching accounts keep all ancestors.
+    # ------------------------------------------------------
+
+    if account_filter and account_filter != "*":
+
+        matching = {
+            name
+            for name in accounts
+            if _matches(name, account_filter)
+        }
+
+        for account_name in list(matching):
+
+            current = accounts.get(account_name)
+
+            while current:
+
+                parent_name = current["parent"]
+
+                if (
+                    not parent_name
+                    or parent_name.lower() == "root"
+                ):
+                    break
+
+                parent = accounts.get(parent_name)
+
+                if parent is None:
+                    break
+
+                matching.add(parent_name)
+
+                current = parent
+
+        accounts = {
+            name: account
+            for name, account in accounts.items()
+            if name in matching
+        }
+
+        # Rebuild children after filtering.
+
+        for account in accounts.values():
+            account["children"] = []
+
+        for account in accounts.values():
+
+            parent_name = account["parent"]
+
+            if not parent_name:
+                continue
+
+            parent = accounts.get(parent_name)
+
+            if parent is not None:
+                parent["children"].append(account)
+
+    # ------------------------------------------------------
+    # Root accounts.
+    # ------------------------------------------------------
+
+    account_tree = []
+
+    for account in accounts.values():
+
+        parent_name = account["parent"]
+
+        if (
+            not parent_name
+            or parent_name.lower() == "root"
+            or parent_name not in accounts
+        ):
+            account_tree.append(account)
+
+    # Put "default" at the end.
+
+    account_tree.sort(
+        key=lambda account: (
+            account["name"].lower() == "default",
+            account["name"].lower(),
+        )
+    )
+
+    return {
+        "accounts": list(accounts.values()),
+        "account_tree": account_tree,
+        "associations": associations,
+        "user_accounts": user_accounts,
+    }
 
