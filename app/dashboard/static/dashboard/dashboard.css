@@ -1453,6 +1453,8 @@ td strong {
 
 .jobs-table .job-id-cell {
     white-space: nowrap;
+        width: 200px;
+    max-width: 200px
 }
 
 .jobs-table .job-id-link {
@@ -1881,5 +1883,13 @@ td strong {
         margin-left: 30px;
     }
 
+}
+
+.job-name-column {
+    width: 240px;
+    max-width: 240px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 

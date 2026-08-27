@@ -79,13 +79,6 @@ def run_slurm(command):
 def parse_gres(gres):
     """
     Parse Slurm GPU GRES information.
-
-    Examples:
-
-        gpu:a100:8
-        gpu:6000:4
-        (null)
-
     Returns:
 
         {
@@ -150,7 +143,13 @@ def parse_gres(gres):
     gpu_type = parts[1]
 
     try:
-        total = int(parts[2])
+        # Slurm may append socket information:
+        #
+        # gpu:a100:4(S:0-1)
+        #
+        # We only want the numeric GPU count.
+        total = int(parts[2].split("(", 1)[0])        
+#        total = int(parts[2])
     except ValueError:
         total = 0
 
