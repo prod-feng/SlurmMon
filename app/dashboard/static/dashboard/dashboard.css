@@ -1180,28 +1180,28 @@ td strong {
  */
 
 .account-tree-row.tree-level-0-odd {
-    background-color: #e2eefd !important;
+    background-color: #f5f9fe !important;
 }
 
 .account-tree-row.tree-level-0-even {
-    background-color: #d6e6fc !important;
+    background-color: #f5f9fe !important;
 }
 
 .account-tree-row.tree-level-1-odd {
-    background-color: #edf5fe !important;
+    background-color: #f5f9fe !important;
 }
 
 .account-tree-row.tree-level-1-even {
-    background-color: #e2eefd !important;
+    background-color: #f1f6fd !important;
 }
 
 
 .account-tree-row.tree-level-2-odd {
-    background-color: #f0f8ff !important;
+    background-color: #f7faff !important;
 }
 
 .account-tree-row.tree-level-2-even {
-    background-color: #dfefff !important;
+    background-color: #f3f8fe !important;
 }
 
 
@@ -1232,11 +1232,11 @@ td strong {
 
 
 .account-tree-users-list.tree-level-1-odd {
-    background-color: #e8f3ff !important;
+    background-color: #f5f9fe !important;
 }
 
 .account-tree-users-list.tree-level-1-even {
-    background-color: #d4e9ff !important;
+    background-color: #f1f6fd !important;
 }
 
 .tree-user {

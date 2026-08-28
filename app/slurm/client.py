@@ -61,6 +61,7 @@ class SlurmClient:
     def partitions(self) -> str:
         return self._run(
             "sinfo",
+            "-a",
             "-h",
             "-o",
             "%P|%a|%l|%D|%C",
@@ -93,6 +94,7 @@ class SlurmClient:
         return self._run(
             "scontrol",
             "show",
+            "-a",
             "partition",
             partition,
         )
