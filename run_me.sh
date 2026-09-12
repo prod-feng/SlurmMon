@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-BINDIP="172.17.120.33"
+BINDIP="x.x.x.x"
 BINDPORT="8222"
 
 export DJANGO_DEBUG=true
