@@ -25,6 +25,9 @@ def dashboard(request):
 
         "cpus": {
             "total": 0,
+            "allocated": 0,
+            "idle": 0,
+            "other": 0,            
         },
 
         "gpus": {

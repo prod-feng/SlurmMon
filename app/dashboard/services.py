@@ -317,7 +317,7 @@ def get_nodes_summary():
         "-N",
         "-h",
         "-o",
-        "%N|%T|%c|%G",
+        "%N|%T|%c|%C|%G",
     ])
 
     nodes = {}
@@ -331,7 +331,7 @@ def get_nodes_summary():
 
         parts = line.split("|")
 
-        if len(parts) != 4:
+        if len(parts) != 5:
             continue
 
         node_name = parts[0].strip()
@@ -342,7 +342,35 @@ def get_nodes_summary():
         except ValueError:
             cpus = 0
 
-        gres = parts[3].strip()
+        # %C is:
+        #
+        # allocated/idle/other/total
+        #
+        # Example:
+        #
+        # 32/224/0/256
+        #
+        try:
+            cpu_parts = parts[3].strip().split("/")
+
+            if len(cpu_parts) == 4:
+                cpus_allocated = int(cpu_parts[0])
+                cpus_idle = int(cpu_parts[1])
+                cpus_other = int(cpu_parts[2])
+                cpus_total = int(cpu_parts[3])
+            else:
+                cpus_allocated = 0
+                cpus_idle = 0
+                cpus_other = 0
+                cpus_total = cpus
+
+        except ValueError:
+            cpus_allocated = 0
+            cpus_idle = 0
+            cpus_other = 0
+            cpus_total = cpus
+
+        gres = parts[4].strip()
 
         if not node_name:
             continue
@@ -368,6 +396,10 @@ def get_nodes_summary():
             nodes[node_name] = {
                 "state": state,
                 "cpus": cpus,
+                "cpus_allocated": cpus_allocated,
+                "cpus_idle": cpus_idle,
+                "cpus_other": cpus_other,
+                "cpus_total": cpus_total,                
                 "gpus": gpu,
             }
 
@@ -394,6 +426,9 @@ def get_nodes_summary():
     allocated = 0
     down = 0
     cpus = 0
+    cpus_allocated = 0
+    cpus_idle = 0
+    cpus_other = 0
 
     gpu_total = 0
     gpu_by_type = {}
@@ -403,7 +438,9 @@ def get_nodes_summary():
         state = node["state"]
 
         cpus += node["cpus"]
-
+        cpus_allocated += node["cpus_allocated"]
+        cpus_idle += node["cpus_idle"]
+        cpus_other += node["cpus_other"]
         # -----------------------------
         # Node state
         # -----------------------------
@@ -455,6 +492,9 @@ def get_nodes_summary():
         "allocated": allocated,
         "down": down,
         "cpus": cpus,
+        "cpus_allocated": cpus_allocated,
+        "cpus_idle": cpus_idle,
+        "cpus_other": cpus_other,        
         "gpus": {
             "total": gpu_total,
             "by_type": gpu_by_type,
@@ -700,6 +740,9 @@ def get_cluster_summary():
 
         "cpus": {
             "total": node_summary["cpus"],
+            "allocated": node_summary["cpus_allocated"],
+            "idle": node_summary["cpus_idle"],
+            "other": node_summary["cpus_other"],            
         },
 
         "gpus": gpu_summary,

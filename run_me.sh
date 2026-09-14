@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-BINDIP="172.17.120.33"
+BINDIP="172.17.120.8"
 BINDPORT="8222"
 
 export DJANGO_DEBUG=true
@@ -112,7 +112,7 @@ status() {
         pid="$(cat "$PIDFILE")"
 
         echo "Running (PID $pid)."
-        echo "URL: http://0.0.0.0:8000/"
+        echo "URL: http://$BINDIP:$BINDPORT/"
         echo "Log: $LOGFILE"
     else
         echo "Not running."

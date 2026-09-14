@@ -90,6 +90,18 @@ HPC cluster overview
             Total CPU cores
         </div>
 
+    <div class="metric-details">
+
+        <span class="status allocated">
+            ● {{ cpu_stats.allocated|floatformat:0 }} Allocated
+        </span>
+
+        <span class="status idle">
+            ● {{ cpu_stats.idle|floatformat:0 }} Idle
+        </span>
+
+    </div>	
+
     </div>
 
 
