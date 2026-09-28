@@ -11,7 +11,7 @@ cd SlurmMon
 
 ```
 
-Make a image use the def file in appraiser/ folder.
+## Make a image use the def file in apptainer/ sub-folder.
 
 # 2
 run command:
