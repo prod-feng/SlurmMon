@@ -33,6 +33,7 @@ Modify the run\_me.sh to set up the Bind port and IP according to your needs.
 
 <img width="953" height="678" alt="Screenshot-SlurmMon" src="https://github.com/user-attachments/assets/393754fa-321f-408e-8ebf-d40b7ad4e771" />
 
-# webhosting
 
-If you have multiple clusters. Use screenshot of SlurmMon web page every a few minutes; save the PNG files to a shares space; and list all of them in a public facing web page.
+# 3 webhosting
+
+If you have multiple clusters. Use screenshot(https://github.com/prod-feng/webpage-screenshot) of SlurmMon web page every a few minutes; save the PNG files to a shares space; and list all of them in a public facing web page. Check the webhosting/ sub-folder.
