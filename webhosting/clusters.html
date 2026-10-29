@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAA HPC Clusters</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .gallery {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .photo {
+            flex: 1;
+            background-color: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+        }
+
+        .photo img {
+            #width: 100%;
+            #height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .label {
+            font-size: 20px;
+            font-weight: bold;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        /* Stack the photos on smaller screens */
+        @media (max-width: 700px) {
+            .gallery {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Stony Brook University HPC Clusters</h1>
+
+    <div class="gallery">
+
+        <div class="photo">
+            <img id="photo1" src="zzz_status.png" alt="zzz_status.png">
+            <div class="label">zzz Cluster</div>
+        </div>
+
+        <div class="photo">
+            <img id="photo2" src="https://xxx.xxx.xxx/public/xxx_status.png" alt="seawulf_status.png">
+            <div class="label">xxx Cluster</div>
+        </div>
+
+        <div class="photo">
+            <img id="photo3" src="https://yyy.yyy.yyy/public/yyy_status.png" alt="clinwulf_status.png">
+            <div class="label">yyy Cluster</div>
+        </div>
+
+    </div>
+   <footer>
+        Status are automatically refreshed every 3 minutes.
+	Next refresh in: <span id="countdown">3:00</span>
+    </footer>    
+    <script>
+        // Refresh the photos every 3 minutes (180,000 milliseconds)
+        setInterval(function () {
+            const timestamp = new Date().getTime();
+
+            document.getElementById("photo1").src = "zzz_status.png?t=" + timestamp;
+            document.getElementById("photo2").src = "https://xxx.xxx.xxx/public/xxx_status.png?t=" + timestamp;
+            document.getElementById("photo3").src = "https://yyy.yyy.yyy/public/yyy_status.png?t=" + timestamp;
+
+        }, 180000);
+    // Countdown
+    let seconds = 180;
+
+    setInterval(function () {
+        seconds--;
+
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+
+        document.getElementById("countdown").textContent =
+            minutes + ":" + remainingSeconds.toString().padStart(2, "0");
+
+        // Reset countdown when it reaches zero
+        if (seconds <= 0) {
+            seconds = 180;
+        }
+
+    }, 1000);	    
+    </script>
+</body>
+</html>
