@@ -36,4 +36,6 @@ Modify the run\_me.sh to set up the Bind port and IP according to your needs.
 
 # 3 public webhosting
 
-If you have multiple clusters. Use screenshot(https://github.com/prod-feng/webpage-screenshot) of SlurmMon web page every a few minutes; save the PNG files to a shares space; and list all of them in a public facing web page. Check the ```webhosting/``` sub-folder.
+If you have single or multiple clusters, you want put your clusters' realtime status on your internet public facing website:
+
+Use screenshot(https://github.com/prod-feng/webpage-screenshot) of SlurmMon web page every a few minutes; save the PNG files to a shares space; and list all of them in a public facing web page. Check the ```webhosting/``` sub-folder, update and save the clusters.html to your website hosting server(or use PNG files directly in your webpages).
